@@ -29,29 +29,28 @@ import javax.xml.namespace.QName;
 
 /**
  *
- * @author Samsung
+ * @author Juany
  */
 
 @XmlRootElement(name = "Archivo")
 public class Archivo {
  
-    String ID;
+    int ID;
     String Nombre;
     String Fecha;
     String Directorio;
     byte[] Contenido;
-    ArrayList<Usuario> escritura;
-    ArrayList<Usuario> lectura;
-    ArrayList<Usuario> ambos;
+    int user;
+    Usuario usuario;
 
     public Archivo() {
-        this.ID = "";
+
         this.Nombre = "";
         this.Fecha = "";
         this.Directorio = "";
     }
 
-    public Archivo(String ID, String Nombre, String Fecha, String Directorio) {
+    public Archivo(int ID, String Nombre, String Fecha, String Directorio) {
         this.ID = ID;
         this.Nombre = Nombre;
         this.Fecha = Fecha;
@@ -133,7 +132,7 @@ public class Archivo {
                         + "where c.ID = '" + ID + "';");
                 /*Carga los datos de la base de datos a las propiedades de la clase*/
                 while (rs.next()) {
-                    this.ID = rs.getString("codigoPais");
+                    this.ID = rs.getInt("codigoID");
                     this.Nombre = rs.getString("codigoDepartamento");
                     this.Fecha = rs.getString("codigoCiudad");
                     this.Directorio = rs.getString("nemo");
@@ -169,11 +168,11 @@ public class Archivo {
     }
 
     @XmlElement
-    public String getID() {
+    public int getID() {
         return ID;
     }
 
-    public void setID(String ID) {
+    public void setID(int ID) {
         this.ID = ID;
     }
 

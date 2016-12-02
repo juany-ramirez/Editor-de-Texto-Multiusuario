@@ -1,9 +1,23 @@
-
 package textomultiusuario;
 
+import java.awt.Color;
+import java.awt.Font;
 import java.util.ArrayList;
 import javax.swing.Icon;
+import javax.swing.JButton;
+import javax.swing.JColorChooser;
 import javax.swing.JOptionPane;
+import javax.swing.event.UndoableEditEvent;
+import javax.swing.event.UndoableEditListener;
+import javax.swing.text.AttributeSet;
+import javax.swing.text.Style;
+import javax.swing.text.StyleConstants;
+import javax.swing.text.StyledDocument;
+import javax.swing.undo.CannotRedoException;
+import javax.swing.undo.UndoManager;
+import javax.xml.bind.Element;
+import java.sql.* ;  // for standard JDBC programs
+import java.math.* ; // for BigDecimal and BigInteger support
 
 /**
  *
@@ -20,7 +34,23 @@ public class Main extends javax.swing.JFrame {
         usuarios = new ArrayList<>();
         usuarios.add(new Usuario("juanyramirez", "juany"));
         usuarios.add(new Usuario("usuario1", "usuario1"));
-
+        jTextArea1.getCaret().setSelectionVisible(true);
+        jTextArea1.getDocument().addUndoableEditListener(
+                new UndoableEditListener() {
+                    public void undoableEditHappened(UndoableEditEvent e) {
+                        undo.addEdit(e.getEdit());
+                    }
+                });
+        try{
+            Connection myConn = DriverManager.getConnection("jdbc:mysql://localhost3306/demo","juany","juany");
+            Statement myStmt = myConn.createStatement();
+            ResultSet myRs = myStmt.executeQuery("select * from Usuario");
+            while(myRs.next()){
+                System.out.println(myRs.getString("last_name"+" - "+myRs.getString(null)));
+            }
+        }catch(Exception ex){
+            
+        }
     }
 
     @SuppressWarnings("unchecked")
@@ -48,11 +78,14 @@ public class Main extends javax.swing.JFrame {
         jButton5 = new javax.swing.JButton();
         jButton6 = new javax.swing.JButton();
         jButton7 = new javax.swing.JButton();
-        jButton8 = new javax.swing.JButton();
-        jButton9 = new javax.swing.JButton();
         jButton10 = new javax.swing.JButton();
-        jButton11 = new javax.swing.JButton();
         jButton12 = new javax.swing.JButton();
+        jButton11 = new javax.swing.JButton();
+        jButton14 = new javax.swing.JButton();
+        jButton8 = new javax.swing.JButton();
+        jButton13 = new javax.swing.JButton();
+        jButton15 = new javax.swing.JButton();
+        jComboBox1 = new javax.swing.JComboBox();
         jPanel2 = new javax.swing.JPanel();
         jScrollPane3 = new javax.swing.JScrollPane();
         jTextArea1 = new javax.swing.JTextArea();
@@ -154,7 +187,6 @@ public class Main extends javax.swing.JFrame {
 
         jDialog1.setJMenuBar(jMenuBar1);
 
-        jDialog2.setLocationByPlatform(true);
         jDialog2.setMaximumSize(new java.awt.Dimension(935, 700));
         jDialog2.setMinimumSize(new java.awt.Dimension(935, 700));
         jDialog2.setPreferredSize(new java.awt.Dimension(935, 700));
@@ -168,42 +200,118 @@ public class Main extends javax.swing.JFrame {
         jPanel3.setFont(new java.awt.Font("Segoe UI Light", 0, 24)); // NOI18N
         jPanel3.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jButton5.setFont(new java.awt.Font("Tw Cen MT Condensed", 0, 18)); // NOI18N
+        jButton5.setBackground(new java.awt.Color(0, 102, 102));
+        jButton5.setFont(new java.awt.Font("Tw Cen MT Condensed", 0, 28)); // NOI18N
+        jButton5.setForeground(new java.awt.Color(153, 153, 153));
+        jButton5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/paste_2-48.png"))); // NOI18N
         jButton5.setText("Paste");
-        jPanel3.add(jButton5, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 10, 112, 100));
-
-        jButton6.setFont(new java.awt.Font("Tw Cen MT Condensed", 0, 18)); // NOI18N
-        jButton6.setText("Cut");
-        jButton6.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton6ActionPerformed(evt);
+        jButton5.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jButton5MouseClicked(evt);
             }
         });
-        jPanel3.add(jButton6, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 10, 130, 50));
+        jPanel3.add(jButton5, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 10, 140, 100));
 
-        jButton7.setFont(new java.awt.Font("Tw Cen MT Condensed", 0, 18)); // NOI18N
+        jButton6.setBackground(new java.awt.Color(102, 0, 102));
+        jButton6.setFont(new java.awt.Font("Tw Cen MT Condensed", 0, 28)); // NOI18N
+        jButton6.setForeground(new java.awt.Color(204, 204, 204));
+        jButton6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/colorwheel-64.png"))); // NOI18N
+        jButton6.setText("COLOR");
+        jButton6.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jButton6MouseClicked(evt);
+            }
+        });
+        jPanel3.add(jButton6, new org.netbeans.lib.awtextra.AbsoluteConstraints(730, 10, 170, 100));
+
+        jButton7.setBackground(new java.awt.Color(0, 102, 102));
+        jButton7.setFont(new java.awt.Font("Tw Cen MT Condensed", 0, 28)); // NOI18N
+        jButton7.setForeground(new java.awt.Color(153, 153, 153));
+        jButton7.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/copy_2-32.png"))); // NOI18N
         jButton7.setText("Copy");
+        jButton7.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jButton7MouseClicked(evt);
+            }
+        });
         jPanel3.add(jButton7, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 60, 130, 50));
 
-        jButton8.setFont(new java.awt.Font("Sitka Text", 0, 20)); // NOI18N
-        jButton8.setText("A-");
-        jPanel3.add(jButton8, new org.netbeans.lib.awtextra.AbsoluteConstraints(780, 20, 60, 50));
-
-        jButton9.setFont(new java.awt.Font("Sitka Text", 0, 20)); // NOI18N
-        jButton9.setText("A+");
-        jPanel3.add(jButton9, new org.netbeans.lib.awtextra.AbsoluteConstraints(710, 20, 70, 50));
-
         jButton10.setFont(new java.awt.Font("Sylfaen", 0, 18)); // NOI18N
-        jButton10.setText("U");
-        jPanel3.add(jButton10, new org.netbeans.lib.awtextra.AbsoluteConstraints(800, 70, -1, -1));
-
-        jButton11.setFont(new java.awt.Font("Sylfaen", 2, 18)); // NOI18N
-        jButton11.setText("I ");
-        jPanel3.add(jButton11, new org.netbeans.lib.awtextra.AbsoluteConstraints(710, 70, -1, -1));
+        jButton10.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/Bold_Sans-32.png"))); // NOI18N
+        jButton10.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jButton10MouseClicked(evt);
+            }
+        });
+        jPanel3.add(jButton10, new org.netbeans.lib.awtextra.AbsoluteConstraints(650, 70, 70, -1));
 
         jButton12.setFont(new java.awt.Font("Sylfaen", 1, 18)); // NOI18N
-        jButton12.setText("B");
-        jPanel3.add(jButton12, new org.netbeans.lib.awtextra.AbsoluteConstraints(750, 70, 50, -1));
+        jButton12.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/Italic_Serif-32.png"))); // NOI18N
+        jButton12.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jButton12MouseClicked(evt);
+            }
+        });
+        jPanel3.add(jButton12, new org.netbeans.lib.awtextra.AbsoluteConstraints(580, 70, 70, -1));
+
+        jButton11.setBackground(new java.awt.Color(102, 102, 0));
+        jButton11.setFont(new java.awt.Font("Sitka Text", 0, 20)); // NOI18N
+        jButton11.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/Format_editit-06-48.png"))); // NOI18N
+        jButton11.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jButton11MouseClicked(evt);
+            }
+        });
+        jPanel3.add(jButton11, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 10, 70, 60));
+
+        jButton14.setFont(new java.awt.Font("Sitka Text", 0, 20)); // NOI18N
+        jButton14.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/022_060_design_font_smaller_decrease-48.png"))); // NOI18N
+        jButton14.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jButton14MouseClicked(evt);
+            }
+        });
+        jPanel3.add(jButton14, new org.netbeans.lib.awtextra.AbsoluteConstraints(650, 10, 70, 60));
+
+        jButton8.setBackground(new java.awt.Color(0, 102, 102));
+        jButton8.setFont(new java.awt.Font("Tw Cen MT Condensed", 0, 28)); // NOI18N
+        jButton8.setForeground(new java.awt.Color(153, 153, 153));
+        jButton8.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/6-32.png"))); // NOI18N
+        jButton8.setText("Cut");
+        jButton8.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jButton8MouseClicked(evt);
+            }
+        });
+        jPanel3.add(jButton8, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 10, 130, 50));
+
+        jButton13.setFont(new java.awt.Font("Sitka Text", 0, 20)); // NOI18N
+        jButton13.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/022_061_design_font_larger_increase-48.png"))); // NOI18N
+        jButton13.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jButton13MouseClicked(evt);
+            }
+        });
+        jPanel3.add(jButton13, new org.netbeans.lib.awtextra.AbsoluteConstraints(580, 10, 70, 60));
+
+        jButton15.setBackground(new java.awt.Color(102, 102, 0));
+        jButton15.setFont(new java.awt.Font("Sitka Text", 0, 20)); // NOI18N
+        jButton15.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/Format_editit-01-48.png"))); // NOI18N
+        jButton15.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jButton15MouseClicked(evt);
+            }
+        });
+        jPanel3.add(jButton15, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 10, 70, 60));
+
+        jComboBox1.setFont(new java.awt.Font("Sylfaen", 0, 18)); // NOI18N
+        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Arial", "Serif", "Times New Roman", "Verdana", "Copperplate" }));
+        jComboBox1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jComboBox1ActionPerformed(evt);
+            }
+        });
+        jPanel3.add(jComboBox1, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 80, 190, 30));
 
         jTabbedPane1.addTab("Home", jPanel3);
 
@@ -333,21 +441,20 @@ public class Main extends javax.swing.JFrame {
     private void jButton1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton1MouseClicked
         String user = jTextField1.getText();
         String pass = jPasswordField1.getText();
-        boolean pase =false;
+        boolean pase = false;
         for (int i = 0; i < usuarios.size(); i++) {
-            System.out.println(user+((Usuario)usuarios.get(i)).user);
-            System.out.println(pass+((Usuario)usuarios.get(i)).password);
-            if(user.equals(((Usuario)usuarios.get(i)).user) && pass.equals(((Usuario)usuarios.get(i)).password)  ){
+            System.out.println(user + ((Usuario) usuarios.get(i)).user);
+            System.out.println(pass + ((Usuario) usuarios.get(i)).password);
+            if (user.equals(((Usuario) usuarios.get(i)).user) && pass.equals(((Usuario) usuarios.get(i)).password)) {
                 jDialog1.pack();
                 jDialog1.setModal(true);
                 jDialog1.setVisible(true);
-                pase= true;
+                pase = true;
             }
         }
-        if(pase==false){
+        if (pase == false) {
             JOptionPane.showMessageDialog(this, "Usuario o contraseña incorrecta");
         }
-        
     }//GEN-LAST:event_jButton1MouseClicked
 
     private void jButton4MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton4MouseClicked
@@ -356,26 +463,124 @@ public class Main extends javax.swing.JFrame {
         jDialog2.setVisible(true);
     }//GEN-LAST:event_jButton4MouseClicked
 
-    private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
+    private void jButton11MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton11MouseClicked
+        try {
+            undo.redo();
+        } catch (CannotRedoException cre) {
+
+        }
+    }//GEN-LAST:event_jButton11MouseClicked
+
+    private void jButton6MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton6MouseClicked
+        Color initialcolor = jTextArea1.getCaretColor();
+        Color color = JColorChooser.showDialog(this, "Select a color", initialcolor);
+        jTextArea1.setForeground(color);
+    }//GEN-LAST:event_jButton6MouseClicked
+
+    private void jButton14MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton14MouseClicked
+        int fs = jTextArea1.getFont().getSize() - 1;
+        if (fs >= 1 && bold) {
+            jTextArea1.setFont(new Font(jTextArea1.getFont().getFontName(), jTextArea1.getFont().getStyle(), fs));
+        }
+    }//GEN-LAST:event_jButton14MouseClicked
+
+    private void jButton10MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton10MouseClicked
+        int start = jTextArea1.getSelectionStart();
+        int end = jTextArea1.getSelectionEnd();
+
+        if (!bold) {
+            int fs = jTextArea1.getFont().getSize();
+            if (fs >= 1) {
+                jTextArea1.setFont(new Font(jTextArea1.getFont().getFontName(), Font.BOLD, fs));
+            }
+            italic = false;
+            bold = true;
+
+        } else {
+            int fs = jTextArea1.getFont().getSize();
+            if (fs >= 1) {
+                jTextArea1.setFont(new Font(jTextArea1.getFont().getFontName(), Font.PLAIN, fs));
+            }
+            italic = false;
+            bold = false;
+        }
+    }//GEN-LAST:event_jButton10MouseClicked
+
+    private void jButton12MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton12MouseClicked
+        if (!italic) {
+            jTextArea1.setFont(new Font(jTextArea1.getFont().getFontName(), Font.ITALIC, jTextArea1.getFont().getSize()));
+            italic = true;
+            System.out.println("italic true");
+            bold = false;
+        } else {
+            bold = false;
+            jTextArea1.setFont(new Font(jTextArea1.getFont().getFontName(), Font.PLAIN, jTextArea1.getFont().getSize()));
+            italic = false;
+            System.out.println("italic false");
+        }
+    }//GEN-LAST:event_jButton12MouseClicked
+
+    private void jButton13MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton13MouseClicked
+        int fs = jTextArea1.getFont().getSize() + 1;
+        if (fs >= 1) {
+            if(bold){
+                jTextArea1.setFont(new Font(jTextArea1.getFont().getFontName(),Font.BOLD, fs));
+            }else if (italic){
+                jTextArea1.setFont(new Font(jTextArea1.getFont().getFontName(),Font.ITALIC, fs));
+            }else{
+                jTextArea1.setFont(new Font(jTextArea1.getFont().getFontName(),Font.PLAIN, fs));
+            }
+        }
+    }//GEN-LAST:event_jButton13MouseClicked
+
+    private void jButton15MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton15MouseClicked
+        try {
+            undo.undo();
+        } catch (CannotRedoException cre) {
+        }
+    }//GEN-LAST:event_jButton15MouseClicked
+
+    private void jButton8MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton8MouseClicked
+        jTextArea1.cut();
+    }//GEN-LAST:event_jButton8MouseClicked
+
+    private void jButton7MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton7MouseClicked
+        jTextArea1.copy();
+    }//GEN-LAST:event_jButton7MouseClicked
+
+    private void jButton5MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton5MouseClicked
+        jTextArea1.paste();
+    }//GEN-LAST:event_jButton5MouseClicked
+
+    private void jComboBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox1ActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jButton6ActionPerformed
-/*
-    public void FlamingoSetUp(){
-        JRibbon ribbon = new JRibbon();
-        JRibbonBand clipboardBand = new JRibbonBand("Clipboard", null);
-        //Icon pasteIcon = new Icon();
-;       JCommandButton pasteButton= new JCommandButton("paste", null);
-        JCommandButton cutButton= new JCommandButton("cut", null);
+        String font = (String) jComboBox1.getSelectedItem();
+        if(bold){
+                jTextArea1.setFont(new Font(font,Font.BOLD, jTextArea1.getFont().getSize()));
+            }else if (italic){
+                jTextArea1.setFont(new Font(font,Font.ITALIC, jTextArea1.getFont().getSize()));
+            }else{
+                jTextArea1.setFont(new Font(font,Font.PLAIN, jTextArea1.getFont().getSize()));
+        }
+    }//GEN-LAST:event_jComboBox1ActionPerformed
+
+    /*
+     public void FlamingoSetUp(){
+     JRibbon ribbon = new JRibbon();
+     JRibbonBand clipboardBand = new JRibbonBand("Clipboard", null);
+     //Icon pasteIcon = new Icon();
+     ;       JCommandButton pasteButton= new JCommandButton("paste", null);
+     JCommandButton cutButton= new JCommandButton("cut", null);
         
-        pasteButton.setCommandButtonKind(JCommandButton.CommandButtonKind.ACTION_AND_POPUP_MAIN_ACTION);
-        //pasteButton.setPopupCallback();
-        clipboardBand.addCommandButton(pasteButton, RibbonElementPriority.TOP);
-        //jDialog2.getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 20, 680, 150));
-        //jPanel1.add(jButton5);
-        ribbon.add(clipboardBand);
-        jPanel1.add(ribbon);
-    }
- */   
+     pasteButton.setCommandButtonKind(JCommandButton.CommandButtonKind.ACTION_AND_POPUP_MAIN_ACTION);
+     //pasteButton.setPopupCallback();
+     clipboardBand.addCommandButton(pasteButton, RibbonElementPriority.TOP);
+     //jDialog2.getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 20, 680, 150));
+     //jPanel1.add(jButton5);
+     ribbon.add(clipboardBand);
+     jPanel1.add(ribbon);
+     }
+     */
     /**
      * @param args the command line arguments
      */
@@ -416,6 +621,9 @@ public class Main extends javax.swing.JFrame {
     private javax.swing.JButton jButton10;
     private javax.swing.JButton jButton11;
     private javax.swing.JButton jButton12;
+    private javax.swing.JButton jButton13;
+    private javax.swing.JButton jButton14;
+    private javax.swing.JButton jButton15;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
@@ -423,7 +631,7 @@ public class Main extends javax.swing.JFrame {
     private javax.swing.JButton jButton6;
     private javax.swing.JButton jButton7;
     private javax.swing.JButton jButton8;
-    private javax.swing.JButton jButton9;
+    private javax.swing.JComboBox jComboBox1;
     private javax.swing.JDialog jDialog1;
     private javax.swing.JDialog jDialog2;
     private javax.swing.JLabel jLabel1;
@@ -465,5 +673,8 @@ public class Main extends javax.swing.JFrame {
     private javax.swing.JTextField jTextField5;
     // End of variables declaration//GEN-END:variables
 
-    ArrayList <Usuario> usuarios ;
+    ArrayList<Usuario> usuarios;
+    boolean bold = false;
+    boolean italic = false;
+    UndoManager undo = new UndoManager();
 }

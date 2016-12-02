@@ -12,6 +12,7 @@ import java.util.ArrayList;
  * @author Admin
  */
 public class Usuario {
+    int id;
     String user;
     String password;
     String nombre;
