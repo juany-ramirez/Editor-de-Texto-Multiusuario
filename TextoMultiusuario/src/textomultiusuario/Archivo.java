@@ -41,18 +41,18 @@ public class Archivo {
     ArrayList<Bloque> Contenido;
     String formato;
     String directorio;
-
+    String xmlS;
 
     public Archivo() {
         this.Nombre = "";
         Contenido = new ArrayList<>();
     }
 
-    public Archivo(int ID, int user, String Nombre, ArrayList<Bloque> Contenido, String formato, String directorio) {
+    public Archivo(int ID, int user, String Nombre, String xmlS, String formato, String directorio) {
         this.ID = ID;
         this.user = user;
         this.Nombre = Nombre;
-        this.Contenido = Contenido;
+        this.xmlS = xmlS;
         this.formato = formato;
         this.directorio = directorio;
     }
@@ -215,6 +215,11 @@ public class Archivo {
 
     public void setDirectorio(String directorio) {
         this.directorio = directorio;
+    }
+
+    @Override
+    public String toString() {
+        return ID + ". " + Nombre;
     }
     
     

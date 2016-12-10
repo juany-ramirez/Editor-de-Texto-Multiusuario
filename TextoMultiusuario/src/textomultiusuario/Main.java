@@ -52,23 +52,28 @@ public class Main extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jDialog1 = new javax.swing.JDialog();
+        jd_Home = new javax.swing.JDialog();
         jButton3 = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         jList1 = new javax.swing.JList();
         jScrollPane2 = new javax.swing.JScrollPane();
-        jList2 = new javax.swing.JList();
+        jl_escrituraArchvs = new javax.swing.JList();
+        jScrollPane4 = new javax.swing.JScrollPane();
+        jl_lecturaArchvs = new javax.swing.JList();
         jLabel15 = new javax.swing.JLabel();
+        jLabel31 = new javax.swing.JLabel();
+        jLabel32 = new javax.swing.JLabel();
         jLabel16 = new javax.swing.JLabel();
         jButton4 = new javax.swing.JButton();
         jLabel19 = new javax.swing.JLabel();
+        jLabel33 = new javax.swing.JLabel();
         jLabel20 = new javax.swing.JLabel();
         jLabel18 = new javax.swing.JLabel();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         jMenuItem1 = new javax.swing.JMenuItem();
         jMenuItem2 = new javax.swing.JMenuItem();
-        jDialog2 = new javax.swing.JDialog();
+        jd_Editor = new javax.swing.JDialog();
         jTabbedPane1 = new javax.swing.JTabbedPane();
         jPanel3 = new javax.swing.JPanel();
         jButton5 = new javax.swing.JButton();
@@ -80,6 +85,7 @@ public class Main extends javax.swing.JFrame {
         jButton13 = new javax.swing.JButton();
         jButton15 = new javax.swing.JButton();
         jComboBox1 = new javax.swing.JComboBox();
+        jLabel30 = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
         jButton9 = new javax.swing.JButton();
         jButton16 = new javax.swing.JButton();
@@ -91,7 +97,7 @@ public class Main extends javax.swing.JFrame {
         jScrollPane3 = new javax.swing.JScrollPane();
         jTextArea1 = new javax.swing.JTextArea();
         jLabel11 = new javax.swing.JLabel();
-        jDialog3 = new javax.swing.JDialog();
+        jd_Permisos = new javax.swing.JDialog();
         jToggleButton1 = new javax.swing.JToggleButton();
         jToggleButton2 = new javax.swing.JToggleButton();
         jButton18 = new javax.swing.JButton();
@@ -99,14 +105,18 @@ public class Main extends javax.swing.JFrame {
         jLabel22 = new javax.swing.JLabel();
         jLabel23 = new javax.swing.JLabel();
         jLabel17 = new javax.swing.JLabel();
-        jPopupMenu1 = new javax.swing.JPopupMenu();
-        jDialog4 = new javax.swing.JDialog();
+        jd_Reporteria = new javax.swing.JDialog();
         jScrollPane5 = new javax.swing.JScrollPane();
         jTable2 = new javax.swing.JTable();
         jButton12 = new javax.swing.JButton();
         jLabel29 = new javax.swing.JLabel();
         jLabel24 = new javax.swing.JLabel();
+        jPopupMenu1 = new javax.swing.JPopupMenu();
+        jMenuItem6 = new javax.swing.JMenuItem();
         jPopupMenu2 = new javax.swing.JPopupMenu();
+        jMenuItem3 = new javax.swing.JMenuItem();
+        jMenuItem4 = new javax.swing.JMenuItem();
+        jMenuItem5 = new javax.swing.JMenuItem();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jTextField1 = new javax.swing.JTextField();
@@ -131,14 +141,23 @@ public class Main extends javax.swing.JFrame {
         jLabel6 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
 
-        jDialog1.setMinimumSize(new java.awt.Dimension(1136, 671));
-        jDialog1.setResizable(false);
-        jDialog1.addWindowListener(new java.awt.event.WindowAdapter() {
+        jd_Home.setMinimumSize(new java.awt.Dimension(1136, 671));
+        jd_Home.setResizable(false);
+        jd_Home.addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowActivated(java.awt.event.WindowEvent evt) {
+                jd_HomeWindowActivated(evt);
+            }
             public void windowClosed(java.awt.event.WindowEvent evt) {
-                jDialog1WindowClosed(evt);
+                jd_HomeWindowClosed(evt);
+            }
+            public void windowClosing(java.awt.event.WindowEvent evt) {
+                jd_HomeWindowClosing(evt);
+            }
+            public void windowDeactivated(java.awt.event.WindowEvent evt) {
+                jd_HomeWindowDeactivated(evt);
             }
         });
-        jDialog1.getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+        jd_Home.getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jButton3.setBackground(new java.awt.Color(51, 51, 51));
         jButton3.setFont(new java.awt.Font("Yu Gothic UI Light", 0, 36)); // NOI18N
@@ -149,7 +168,7 @@ public class Main extends javax.swing.JFrame {
                 jButton3MouseClicked(evt);
             }
         });
-        jDialog1.getContentPane().add(jButton3, new org.netbeans.lib.awtextra.AbsoluteConstraints(590, 80, 410, 150));
+        jd_Home.getContentPane().add(jButton3, new org.netbeans.lib.awtextra.AbsoluteConstraints(590, 70, 410, 150));
 
         jList1.setFont(new java.awt.Font("Tw Cen MT Condensed", 0, 24)); // NOI18N
         jList1.setModel(new javax.swing.AbstractListModel() {
@@ -157,29 +176,54 @@ public class Main extends javax.swing.JFrame {
             public int getSize() { return strings.length; }
             public Object getElementAt(int i) { return strings[i]; }
         });
+        jList1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseReleased(java.awt.event.MouseEvent evt) {
+                jList1MouseReleased(evt);
+            }
+        });
         jScrollPane1.setViewportView(jList1);
 
-        jDialog1.getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 340, 240, 230));
+        jd_Home.getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 370, 240, 230));
 
-        jList2.setFont(new java.awt.Font("Tw Cen MT Condensed", 0, 24)); // NOI18N
-        jList2.setModel(new javax.swing.AbstractListModel() {
+        jl_escrituraArchvs.setFont(new java.awt.Font("Tw Cen MT Condensed", 0, 24)); // NOI18N
+        jl_escrituraArchvs.setModel(new javax.swing.AbstractListModel() {
             String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
             public int getSize() { return strings.length; }
             public Object getElementAt(int i) { return strings[i]; }
         });
-        jScrollPane2.setViewportView(jList2);
+        jScrollPane2.setViewportView(jl_escrituraArchvs);
 
-        jDialog1.getContentPane().add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(680, 340, 240, 230));
+        jd_Home.getContentPane().add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(890, 370, 190, 230));
 
-        jLabel15.setFont(new java.awt.Font("Sylfaen", 0, 36)); // NOI18N
+        jl_lecturaArchvs.setFont(new java.awt.Font("Tw Cen MT Condensed", 0, 24)); // NOI18N
+        jl_lecturaArchvs.setModel(new javax.swing.AbstractListModel() {
+            String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
+            public int getSize() { return strings.length; }
+            public Object getElementAt(int i) { return strings[i]; }
+        });
+        jScrollPane4.setViewportView(jl_lecturaArchvs);
+
+        jd_Home.getContentPane().add(jScrollPane4, new org.netbeans.lib.awtextra.AbsoluteConstraints(590, 370, 190, 230));
+
+        jLabel15.setFont(new java.awt.Font("Sylfaen", 1, 36)); // NOI18N
         jLabel15.setForeground(new java.awt.Color(204, 204, 204));
         jLabel15.setText("Mis Archivos");
-        jDialog1.getContentPane().add(jLabel15, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 280, -1, -1));
+        jd_Home.getContentPane().add(jLabel15, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 270, -1, -1));
 
-        jLabel16.setFont(new java.awt.Font("Sylfaen", 0, 36)); // NOI18N
+        jLabel31.setFont(new java.awt.Font("Sylfaen", 0, 36)); // NOI18N
+        jLabel31.setForeground(new java.awt.Color(204, 204, 204));
+        jLabel31.setText("Lectura:");
+        jd_Home.getContentPane().add(jLabel31, new org.netbeans.lib.awtextra.AbsoluteConstraints(590, 330, 190, -1));
+
+        jLabel32.setFont(new java.awt.Font("Sylfaen", 0, 36)); // NOI18N
+        jLabel32.setForeground(new java.awt.Color(204, 204, 204));
+        jLabel32.setText("Escritura:");
+        jd_Home.getContentPane().add(jLabel32, new org.netbeans.lib.awtextra.AbsoluteConstraints(890, 330, -1, -1));
+
+        jLabel16.setFont(new java.awt.Font("Sylfaen", 1, 36)); // NOI18N
         jLabel16.setForeground(new java.awt.Color(204, 204, 204));
         jLabel16.setText("Archivos Compartidos");
-        jDialog1.getContentPane().add(jLabel16, new org.netbeans.lib.awtextra.AbsoluteConstraints(630, 280, -1, -1));
+        jd_Home.getContentPane().add(jLabel16, new org.netbeans.lib.awtextra.AbsoluteConstraints(630, 270, -1, -1));
 
         jButton4.setBackground(new java.awt.Color(51, 51, 51));
         jButton4.setFont(new java.awt.Font("Yu Gothic UI Light", 0, 36)); // NOI18N
@@ -190,18 +234,21 @@ public class Main extends javax.swing.JFrame {
                 jButton4MouseClicked(evt);
             }
         });
-        jDialog1.getContentPane().add(jButton4, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 80, 410, 150));
+        jd_Home.getContentPane().add(jButton4, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 70, 410, 150));
 
         jLabel19.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jLabel19.setForeground(new java.awt.Color(204, 204, 204));
-        jDialog1.getContentPane().add(jLabel19, new org.netbeans.lib.awtextra.AbsoluteConstraints(840, 10, 60, 40));
+        jd_Home.getContentPane().add(jLabel19, new org.netbeans.lib.awtextra.AbsoluteConstraints(840, 10, 60, 40));
+
+        jLabel33.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/fish-blurred-background.jpg"))); // NOI18N
+        jd_Home.getContentPane().add(jLabel33, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 260, 1140, 60));
 
         jLabel20.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jLabel20.setForeground(new java.awt.Color(204, 204, 204));
-        jDialog1.getContentPane().add(jLabel20, new org.netbeans.lib.awtextra.AbsoluteConstraints(900, 10, 220, 40));
+        jd_Home.getContentPane().add(jLabel20, new org.netbeans.lib.awtextra.AbsoluteConstraints(900, 10, 220, 40));
 
         jLabel18.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/surface_gray_dark_light_shadow_18440_2048x1152.jpg"))); // NOI18N
-        jDialog1.getContentPane().add(jLabel18, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1140, 640));
+        jd_Home.getContentPane().add(jLabel18, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1140, 640));
 
         jMenuBar1.setBackground(new java.awt.Color(102, 0, 51));
         jMenuBar1.setForeground(new java.awt.Color(204, 204, 204));
@@ -218,13 +265,13 @@ public class Main extends javax.swing.JFrame {
 
         jMenuBar1.add(jMenu1);
 
-        jDialog1.setJMenuBar(jMenuBar1);
+        jd_Home.setJMenuBar(jMenuBar1);
 
-        jDialog2.setMaximumSize(new java.awt.Dimension(935, 700));
-        jDialog2.setMinimumSize(new java.awt.Dimension(935, 700));
-        jDialog2.setPreferredSize(new java.awt.Dimension(935, 700));
-        jDialog2.setSize(new java.awt.Dimension(935, 750));
-        jDialog2.getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+        jd_Editor.setMaximumSize(new java.awt.Dimension(935, 700));
+        jd_Editor.setMinimumSize(new java.awt.Dimension(935, 700));
+        jd_Editor.setPreferredSize(new java.awt.Dimension(935, 700));
+        jd_Editor.setSize(new java.awt.Dimension(935, 750));
+        jd_Editor.getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jTabbedPane1.setBackground(new java.awt.Color(0, 153, 153));
         jTabbedPane1.setFont(new java.awt.Font("Segoe UI Semilight", 0, 24)); // NOI18N
@@ -243,7 +290,7 @@ public class Main extends javax.swing.JFrame {
                 jButton5MouseClicked(evt);
             }
         });
-        jPanel3.add(jButton5, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 10, 140, 100));
+        jPanel3.add(jButton5, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 10, 140, 100));
 
         jButton6.setBackground(new java.awt.Color(102, 0, 102));
         jButton6.setFont(new java.awt.Font("Tw Cen MT Condensed", 0, 28)); // NOI18N
@@ -267,7 +314,7 @@ public class Main extends javax.swing.JFrame {
                 jButton7MouseClicked(evt);
             }
         });
-        jPanel3.add(jButton7, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 60, 130, 50));
+        jPanel3.add(jButton7, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 60, 130, 50));
 
         jButton11.setBackground(new java.awt.Color(102, 102, 0));
         jButton11.setFont(new java.awt.Font("Sitka Text", 0, 20)); // NOI18N
@@ -298,7 +345,7 @@ public class Main extends javax.swing.JFrame {
                 jButton8MouseClicked(evt);
             }
         });
-        jPanel3.add(jButton8, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 10, 130, 50));
+        jPanel3.add(jButton8, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 10, 130, 50));
 
         jButton13.setFont(new java.awt.Font("Sitka Text", 0, 20)); // NOI18N
         jButton13.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/022_061_design_font_larger_increase-48.png"))); // NOI18N
@@ -327,6 +374,17 @@ public class Main extends javax.swing.JFrame {
             }
         });
         jPanel3.add(jComboBox1, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 80, 190, 30));
+
+        jLabel30.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/circle-question-mark-20 (1).png"))); // NOI18N
+        jLabel30.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                jLabel30MouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                jLabel30MouseExited(evt);
+            }
+        });
+        jPanel3.add(jLabel30, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 0, 30, 40));
 
         jTabbedPane1.addTab("Home", jPanel3);
 
@@ -417,37 +475,38 @@ public class Main extends javax.swing.JFrame {
                 .addGap(33, 33, 33))
             .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(jPanel2Layout.createSequentialGroup()
-                    .addGap(0, 0, Short.MAX_VALUE)
+                    .addGap(0, 65, Short.MAX_VALUE)
                     .addComponent(jLabel25)
-                    .addGap(0, 0, Short.MAX_VALUE)))
+                    .addGap(0, 66, Short.MAX_VALUE)))
             .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(jPanel2Layout.createSequentialGroup()
-                    .addGap(0, 0, Short.MAX_VALUE)
+                    .addGap(0, 65, Short.MAX_VALUE)
                     .addComponent(jLabel26)
-                    .addGap(0, 0, Short.MAX_VALUE)))
+                    .addGap(0, 66, Short.MAX_VALUE)))
         );
 
         jTabbedPane1.addTab("File", jPanel2);
 
-        jDialog2.getContentPane().add(jTabbedPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 960, 170));
+        jd_Editor.getContentPane().add(jTabbedPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 960, 170));
 
         jTextArea1.setColumns(20);
         jTextArea1.setRows(5);
+        jTextArea1.setText("fajldkfjasdjfalskd;f\naddfjalkdsflka\nfahsdfhasdjfa\nafljhaksdj\n\nfajldkfjasdjfalskd;f\naddfjalkdsflka\nfahsdfhasdjfa\nafljhaksdj\n\nfajldkfjasdjfalskd;f\naddfjalkdsflka\nfahsdfhasdjfa\nafljhaksdj\n\nfajldkfjasdjfalskd;f\naddfjalkdsflka\nfahsdfhasdjfa\nafljhaksdj\n\nfajldkfjasdjfalskd;f\naddfjalkdsflka\nfahsdfhasdjfa\nafljhaksdj\n");
         jScrollPane3.setViewportView(jTextArea1);
 
-        jDialog2.getContentPane().add(jScrollPane3, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 180, 730, 460));
+        jd_Editor.getContentPane().add(jScrollPane3, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 180, 730, 460));
 
         jLabel11.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/transparent_rectangle_bg.png"))); // NOI18N
-        jDialog2.getContentPane().add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 960, 170));
+        jd_Editor.getContentPane().add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 960, 170));
 
-        jDialog2.getAccessibleContext().setAccessibleDescription("");
+        jd_Editor.getAccessibleContext().setAccessibleDescription("");
 
-        jDialog3.addWindowListener(new java.awt.event.WindowAdapter() {
+        jd_Permisos.addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowActivated(java.awt.event.WindowEvent evt) {
-                jDialog3WindowActivated(evt);
+                jd_PermisosWindowActivated(evt);
             }
         });
-        jDialog3.getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+        jd_Permisos.getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jToggleButton1.setBackground(new java.awt.Color(153, 153, 0));
         jToggleButton1.setFont(new java.awt.Font("Sylfaen", 0, 36)); // NOI18N
@@ -457,7 +516,7 @@ public class Main extends javax.swing.JFrame {
                 jToggleButton1ActionPerformed(evt);
             }
         });
-        jDialog3.getContentPane().add(jToggleButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(550, 320, 320, 120));
+        jd_Permisos.getContentPane().add(jToggleButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(550, 320, 320, 120));
 
         jToggleButton2.setBackground(new java.awt.Color(153, 153, 0));
         jToggleButton2.setFont(new java.awt.Font("Sylfaen", 0, 36)); // NOI18N
@@ -467,7 +526,7 @@ public class Main extends javax.swing.JFrame {
                 jToggleButton2ActionPerformed(evt);
             }
         });
-        jDialog3.getContentPane().add(jToggleButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(550, 180, 320, 120));
+        jd_Permisos.getContentPane().add(jToggleButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(550, 180, 320, 120));
 
         jButton18.setBackground(new java.awt.Color(51, 153, 0));
         jButton18.setFont(new java.awt.Font("Sitka Text", 1, 36)); // NOI18N
@@ -479,30 +538,30 @@ public class Main extends javax.swing.JFrame {
                 jButton18MouseClicked(evt);
             }
         });
-        jDialog3.getContentPane().add(jButton18, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 470, 340, 100));
+        jd_Permisos.getContentPane().add(jButton18, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 470, 340, 100));
 
         jComboBox2.setBackground(new java.awt.Color(153, 153, 153));
         jComboBox2.setFont(new java.awt.Font("Sitka Subheading", 0, 24)); // NOI18N
         jComboBox2.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-        jDialog3.getContentPane().add(jComboBox2, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 290, 420, 70));
+        jd_Permisos.getContentPane().add(jComboBox2, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 290, 420, 70));
 
         jLabel22.setFont(new java.awt.Font("Sylfaen", 1, 60)); // NOI18N
         jLabel22.setForeground(new java.awt.Color(204, 204, 204));
         jLabel22.setText("P E R M I S O S");
-        jDialog3.getContentPane().add(jLabel22, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 60, 480, 90));
+        jd_Permisos.getContentPane().add(jLabel22, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 60, 480, 90));
 
         jLabel23.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/surface_gray_dark_light_shadow_18440_2048x1152.jpg"))); // NOI18N
-        jDialog3.getContentPane().add(jLabel23, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 970, 170));
+        jd_Permisos.getContentPane().add(jLabel23, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 970, 170));
 
         jLabel17.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/fish-blurred-background.jpg"))); // NOI18N
-        jDialog3.getContentPane().add(jLabel17, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 970, 620));
+        jd_Permisos.getContentPane().add(jLabel17, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 970, 620));
 
-        jDialog4.addWindowListener(new java.awt.event.WindowAdapter() {
+        jd_Reporteria.addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowActivated(java.awt.event.WindowEvent evt) {
-                jDialog4WindowActivated(evt);
+                jd_ReporteriaWindowActivated(evt);
             }
         });
-        jDialog4.getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+        jd_Reporteria.getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jTable2.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -522,7 +581,7 @@ public class Main extends javax.swing.JFrame {
         });
         jScrollPane5.setViewportView(jTable2);
 
-        jDialog4.getContentPane().add(jScrollPane5, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 170, 820, 470));
+        jd_Reporteria.getContentPane().add(jScrollPane5, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 170, 820, 470));
 
         jButton12.setBackground(new java.awt.Color(0, 102, 102));
         jButton12.setFont(new java.awt.Font("Sylfaen", 1, 24)); // NOI18N
@@ -533,16 +592,33 @@ public class Main extends javax.swing.JFrame {
                 jButton12MouseClicked(evt);
             }
         });
-        jDialog4.getContentPane().add(jButton12, new org.netbeans.lib.awtextra.AbsoluteConstraints(860, 310, 210, 130));
+        jd_Reporteria.getContentPane().add(jButton12, new org.netbeans.lib.awtextra.AbsoluteConstraints(860, 310, 210, 130));
 
         jLabel29.setFont(new java.awt.Font("Sylfaen", 1, 60)); // NOI18N
         jLabel29.setForeground(new java.awt.Color(204, 204, 204));
         jLabel29.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/cloud_data-128.png"))); // NOI18N
         jLabel29.setText("  R e p o r t e r í a");
-        jDialog4.getContentPane().add(jLabel29, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 0, 800, 160));
+        jd_Reporteria.getContentPane().add(jLabel29, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 0, 800, 160));
 
         jLabel24.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/surface_gray_dark_light_shadow_18440_2048x1152.jpg"))); // NOI18N
-        jDialog4.getContentPane().add(jLabel24, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1080, 700));
+        jd_Reporteria.getContentPane().add(jLabel24, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1080, 700));
+
+        jMenuItem6.setText("El delimitador ' | ' muestra el nuevo bloque en el archivo");
+        jPopupMenu1.add(jMenuItem6);
+
+        jMenuItem3.setText("Abrir");
+        jMenuItem3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem3ActionPerformed(evt);
+            }
+        });
+        jPopupMenu2.add(jMenuItem3);
+
+        jMenuItem4.setText("Convertir a doc");
+        jPopupMenu2.add(jMenuItem4);
+
+        jMenuItem5.setText("Permisos");
+        jPopupMenu2.add(jMenuItem5);
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -668,6 +744,7 @@ public class Main extends javax.swing.JFrame {
                 usuario = rs.getString("username");
                 password = rs.getString("password");
                 correo = rs.getString("correo");
+                System.out.println(id + " " + nombre + " " + apellido + " " + usuario + " " + password + " " + correo);
                 if (user.equals(usuario) && pass.equals(password)) {
                     pase = true;
                     AdminUsuario = new Usuario(id, nombre, apellido, usuario, password, correo);
@@ -676,9 +753,9 @@ public class Main extends javax.swing.JFrame {
                     jLabel20.setText(nombre + " " + apellido);
                     //con.close();
                     this.setVisible(false);
-                    jDialog1.pack();
+                    jd_Home.pack();
                     //jDialog1.setModal(true);
-                    jDialog1.setVisible(true);
+                    jd_Home.setVisible(true);
                 }
             }
         } catch (Exception e) {
@@ -692,9 +769,11 @@ public class Main extends javax.swing.JFrame {
 
     private void jButton4MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton4MouseClicked
         jLabel28.setText("");
-        jDialog2.pack();
-        jDialog2.setModal(true);
-        jDialog2.setVisible(true);
+        jLabel27.setText("");
+        jTextArea1.setText("");
+        jd_Editor.pack();
+        jd_Editor.setModal(true);
+        jd_Editor.setVisible(true);
     }//GEN-LAST:event_jButton4MouseClicked
 
     private void jButton11MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton11MouseClicked
@@ -752,17 +831,9 @@ public class Main extends javax.swing.JFrame {
 
     }//GEN-LAST:event_jComboBox1ActionPerformed
 
-    private void jDialog1WindowClosed(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_jDialog1WindowClosed
-        int id = Integer.parseInt(jLabel19.getText());
-        int num = 0;
-        for (int i = 0; i < conectados.size(); i++) {
-            if (((Usuario) conectados.get(i)).getId() == id) {
-                conectados.remove(i);
-                num = i;
-            }
-        }
-        conectados.remove(num);
-    }//GEN-LAST:event_jDialog1WindowClosed
+    private void jd_HomeWindowClosed(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_jd_HomeWindowClosed
+
+    }//GEN-LAST:event_jd_HomeWindowClosed
 
     private void jButton2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton2MouseClicked
         boolean pase = false;
@@ -809,7 +880,7 @@ public class Main extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_jButton2MouseClicked
 
-    private void jDialog3WindowActivated(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_jDialog3WindowActivated
+    private void jd_PermisosWindowActivated(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_jd_PermisosWindowActivated
         try {
             DefaultComboBoxModel modelo = new DefaultComboBoxModel();
             Connection con = (Connection) DriverManager.getConnection("jdbc:mysql://localhost/datab", "root", "qwaszx12");
@@ -818,23 +889,28 @@ public class Main extends javax.swing.JFrame {
             while (rs.next()) {
                 String q = rs.getInt("idusuario") + "-" + rs.getString("nombre") + " " + rs.getString("apellido");
                 System.out.println(q);
-                modelo.addElement(q);
-                jComboBox2.setModel(modelo);
+                if(rs.getInt("idusuario")!=Integer.parseInt(jLabel19.getText())){
+                    modelo.addElement(q);
+                }
             }
+            jComboBox2.setModel(modelo);
         } catch (Exception e) {
             e.printStackTrace();
         }
-    }//GEN-LAST:event_jDialog3WindowActivated
+    }//GEN-LAST:event_jd_PermisosWindowActivated
 
     private void jButton17MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton17MouseClicked
-        jDialog3.pack();
-        jDialog3.setModal(true);
-        jDialog3.setVisible(true);
+        jd_Permisos.pack();
+        jd_Permisos.setModal(true);
+        jd_Permisos.setVisible(true);
     }//GEN-LAST:event_jButton17MouseClicked
 
     private void jButton18MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton18MouseClicked
         boolean pase = false;
-        //if(jLabel24.getText()!= null)
+        if (jLabel28.getText() == "") {
+            //********************************************************************************************************************************************************
+            //Guardar();
+        }
         try {
             Connection con = (Connection) DriverManager.getConnection("jdbc:mysql://localhost/datab", "root", "qwaszx12");
             Statement st = con.createStatement();
@@ -856,6 +932,7 @@ public class Main extends javax.swing.JFrame {
                 for (int i = 0; i < persona.length; i++) {
                     System.out.println(persona[i]);
                 }
+
                 String Query = "insert into permiso "
                         + "(permiso, usuario_idusuario, archivo_idarchivo) "
                         + "values ('" + permi + "', '" + (Integer.parseInt(persona[0])) + "', '" + (Integer.parseInt(jLabel28.getText())) + "')";
@@ -864,7 +941,6 @@ public class Main extends javax.swing.JFrame {
             } else {
                 JOptionPane.showMessageDialog(this, "Error, seleccione una opcion");
             }
-
             pase = true;
         } catch (Exception e) {
             e.printStackTrace();
@@ -878,26 +954,190 @@ public class Main extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton18MouseClicked
 
     private void jButton9MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton9MouseClicked
-        boolean pase = false;
-        //if(jLabel28.getText()!= null)
+        //********************************************************************************************************************************************************
+        //Guardar();
+    }//GEN-LAST:event_jButton9MouseClicked
+
+    private void jToggleButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jToggleButton1ActionPerformed
+        if (jToggleButton2.isSelected() && jToggleButton1.isSelected()) {
+            jToggleButton2.setSelected(false);
+            jToggleButton1.setSelected(false);
+            JOptionPane.showMessageDialog(this, "Solo puede seleccionar un permiso");
+        }
+    }//GEN-LAST:event_jToggleButton1ActionPerformed
+
+    private void jToggleButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jToggleButton2ActionPerformed
+        if (jToggleButton2.isSelected() && jToggleButton1.isSelected()) {
+            jToggleButton2.setSelected(false);
+            jToggleButton1.setSelected(false);
+            JOptionPane.showMessageDialog(this, "Solo puede seleccionar un permiso");
+        }
+    }//GEN-LAST:event_jToggleButton2ActionPerformed
+
+    private void jButton12MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton12MouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton12MouseClicked
+
+    private void jd_ReporteriaWindowActivated(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_jd_ReporteriaWindowActivated
+        DefaultTableModel dtm = new DefaultTableModel(0, 0);
+        String header[] = new String[]{"ID", "ID PROPIETARIO", "NOMBRE", "TAMANO (Bytes)"};
+        dtm.setColumnIdentifiers(header);
+        jTable2.setModel(dtm);
         try {
             Connection con = (Connection) DriverManager.getConnection("jdbc:mysql://localhost/datab", "root", "qwaszx12");
             Statement st = con.createStatement();
+            ResultSet rs = st.executeQuery("select * from archivo");
+            String nombre, contenido;
+            int id, iduser, size;
+            while (rs.next()) {
+                id = rs.getInt("idarchivo");
+                iduser = rs.getInt("usuario_idusuario");
+                nombre = rs.getString("nombre");
+                contenido = rs.getString("contenido");
+                byte[] b = contenido.getBytes("UTF-8");
+                size = b.length;
+                System.out.println(id + " " + iduser + " " + nombre + " " + size);
+                dtm.addRow(new Object[]{id, iduser, nombre, size});
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }//GEN-LAST:event_jd_ReporteriaWindowActivated
+
+    private void jButton3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton3MouseClicked
+        jd_Reporteria.pack();
+        jd_Reporteria.setVisible(true);
+    }//GEN-LAST:event_jButton3MouseClicked
+
+    private void jMenuItem3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem3ActionPerformed
+        // ABRIR ARCHIVO
+        Archivo a = (Archivo) jList1.getSelectedValue();
+
+    }//GEN-LAST:event_jMenuItem3ActionPerformed
+
+    private void jList1MouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jList1MouseReleased
+        if (evt.isPopupTrigger()) {
+            jPopupMenu2.show(this, evt.getX(), evt.getY());
+        }
+    }//GEN-LAST:event_jList1MouseReleased
+
+    private void jd_HomeWindowActivated(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_jd_HomeWindowActivated
+        DefaultListModel dtm = new DefaultListModel();
+        jList1.setModel(dtm);
+        try {
+            Connection con = (Connection) DriverManager.getConnection("jdbc:mysql://localhost/datab", "root", "qwaszx12");
+            Statement st = con.createStatement();
+            ResultSet rs = st.executeQuery("select * from archivo WHERE usuario_idusuario="+Integer.parseInt(jLabel19.getText()));
+            String nombre, contenido, formato, directorio;
+            int id, iduser;
+            while (rs.next()) {
+                id = rs.getInt("idarchivo");
+                iduser = rs.getInt("usuario_idusuario");
+                nombre = rs.getString("nombre");
+                contenido = rs.getString("contenido");
+                formato = rs.getString("formato");
+                directorio = rs.getString("directorio");
+                dtm.addElement(new Archivo(id, iduser, nombre, contenido, formato, directorio));
+                //(int ID, int user, String Nombre, ArrayList<Bloque> Contenido, String formato, String directorio) {
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        DefaultListModel dtml = new DefaultListModel();
+        jl_lecturaArchvs.setModel(dtml);
+        
+        DefaultListModel dtme = new DefaultListModel();
+        jl_escrituraArchvs.setModel(dtme);
+        
+        
+        try {
+            Connection con = (Connection) DriverManager.getConnection("jdbc:mysql://localhost/datab", "root", "qwaszx12");
+            Statement st = con.createStatement();
+            ResultSet rs = st.executeQuery("select * from permiso WHERE usuario_idusuario="+Integer.parseInt(jLabel19.getText()));
+            int id1 = 1, idarch1 = 0;
+            while (rs.next()) {
+                id1 = rs.getInt("permiso");
+                idarch1 = rs.getInt("archivo_idarchivo");
+            }
+            Connection conn = (Connection) DriverManager.getConnection("jdbc:mysql://localhost/datab", "root", "qwaszx12");
+            Statement stt = conn.createStatement();
+            ResultSet rss = stt.executeQuery("select * from archivo WHERE idarchivo="+idarch1);
+            String nombre, contenido, formato, directorio;
+            int id, iduser;
+            while (rss.next()) {
+                id = rss.getInt("idarchivo");
+                iduser = rss.getInt("usuario_idusuario");
+                nombre = rss.getString("nombre");
+                contenido = rss.getString("contenido");
+                formato = rss.getString("formato");
+                directorio = rss.getString("directorio");
+                if(id1 == 1){
+                    dtml.addElement(new Archivo(id, iduser, nombre, contenido, formato, directorio));
+                }else if(id1 == 2){
+                    dtme.addElement(new Archivo(id, iduser, nombre, contenido, formato, directorio));
+                }
+                //(int ID, int user, String Nombre, ArrayList<Bloque> Contenido, String formato, String directorio) {
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }//GEN-LAST:event_jd_HomeWindowActivated
+
+    private void jd_HomeWindowDeactivated(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_jd_HomeWindowDeactivated
+
+    }//GEN-LAST:event_jd_HomeWindowDeactivated
+
+    private void jd_HomeWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_jd_HomeWindowClosing
+        int id = Integer.parseInt(jLabel19.getText());
+        int num = 0;
+        for (int i = 0; i < conectados.size(); i++) {
+            System.out.println(((Usuario) conectados.get(i)).getId() + " = " + id);
+            if (((Usuario) conectados.get(i)).getId() == id) {
+                JOptionPane.showMessageDialog(this, ((Usuario) conectados.get(i)).nombre + " ha cerrado sesion");
+                conectados.remove(i);
+                num = i;
+            }
+        }
+        //conectados.remove(num);
+        this.pack();
+        this.setVisible(true);
+    }//GEN-LAST:event_jd_HomeWindowClosing
+
+    private void jLabel30MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel30MouseEntered
+        jPopupMenu2.show(this, evt.getX(), evt.getY());
+    }//GEN-LAST:event_jLabel30MouseEntered
+
+    private void jLabel30MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel30MouseExited
+        jPopupMenu2.show(false);
+    }//GEN-LAST:event_jLabel30MouseExited
+/*
+    public void Guardar() {
+        boolean pase = false;
+        //if(jLabel28.getText()!= null)
+        ResultSet rs = null;
+        Statement st = null;
+        Connection con = null;
+        try {
+            con = (Connection) DriverManager.getConnection("jdbc:mysql://localhost/datab", "root", "qwaszx12");
+            st = con.createStatement();
             int permi = 1;
             String nombre_archivo = null;
             if (jLabel28.getText().equals("")) {
-                nombre_archivo = JOptionPane.showInputDialog("Ingrese el nombre del documento");
+                nombre_archivo = JOptionPane.showInputDialog("Ingrese el nombre del documento: ");
             } else {
                 nombre_archivo = jLabel27.getText();
             }
             int idarchv;
+
             try {
-                ResultSet rs = st.executeQuery("SELECT * FROM archivo WHERE idarchivo=(SELECT MAX(idarchivo) FROM archivo)");
+                rs = st.executeQuery("SELECT * FROM archivo WHERE idarchivo=(SELECT MAX(idarchivo) FROM archivo)");
                 rs.next();
                 idarchv = rs.getInt("idarchivo") + 1;
             } catch (Exception e) {
                 idarchv = 1;
             }
+            ArrayList<Bloque> bloqs = new ArrayList<>();
+            bloqs.add(null);
             String forma = jTextArea1.getFont().getSize() + ";"
                     + (String) jComboBox1.getSelectedItem();
             Archivo arch = new Archivo(
@@ -921,64 +1161,28 @@ public class Main extends javax.swing.JFrame {
             pase = true;
         } catch (Exception e) {
             e.printStackTrace();
+        } finally {
+            try {
+                if (rs != null) {
+                    rs.close();
+                }
+                if (st != null) {
+                    st.close();
+                }
+                if (con != null) {
+                    con.close();
+                }
+            } catch (SQLException e) {
+                System.out.println(e.toString());
+            }
         }
         if (pase == false) {
             JOptionPane.showMessageDialog(this, "Error en almacenamiento");
         } else {
             JOptionPane.showMessageDialog(this, "Se ha almacenado el archivo");
         }
-    }//GEN-LAST:event_jButton9MouseClicked
-
-    private void jToggleButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jToggleButton1ActionPerformed
-        if (jToggleButton2.isSelected() && jToggleButton1.isSelected()) {
-            jToggleButton2.setSelected(false);
-            jToggleButton1.setSelected(false);
-            JOptionPane.showMessageDialog(this, "Solo puede seleccionar un permiso");
-        }
-    }//GEN-LAST:event_jToggleButton1ActionPerformed
-
-    private void jToggleButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jToggleButton2ActionPerformed
-        if (jToggleButton2.isSelected() && jToggleButton1.isSelected()) {
-            jToggleButton2.setSelected(false);
-            jToggleButton1.setSelected(false);
-            JOptionPane.showMessageDialog(this, "Solo puede seleccionar un permiso");
-        }
-    }//GEN-LAST:event_jToggleButton2ActionPerformed
-
-    private void jButton12MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton12MouseClicked
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton12MouseClicked
-
-    private void jDialog4WindowActivated(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_jDialog4WindowActivated
-        try {
-            Connection con = (Connection) DriverManager.getConnection("jdbc:mysql://localhost/datab", "root", "qwaszx12");
-            Statement st = con.createStatement();
-            ResultSet rs = st.executeQuery("select * from archivo");
-            String nombre, contenido;
-            int id, iduser, size;
-            while (rs.next()) {
-                DefaultTableModel dtm = new DefaultTableModel(0, 0);
-                String header[] = new String[]{"ID", "ID PROPIETARIO", "NOMBRE", "TAMANO"};
-                dtm.setColumnIdentifiers(header);
-                jTable2.setModel(dtm);
-                id = rs.getInt("idarchivo");
-                iduser = rs.getInt("usuario_idusuario");
-                nombre = rs.getString("nombre");
-                contenido = rs.getString("nombre");
-                byte[] b = contenido.getBytes("UTF-8");
-                size = b.length;
-                dtm.addRow(new Object[]{id, iduser, nombre, size});
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }//GEN-LAST:event_jDialog4WindowActivated
-
-    private void jButton3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton3MouseClicked
-        jDialog4.pack();
-        jDialog4.setVisible(true);
-    }//GEN-LAST:event_jButton3MouseClicked
-
+    }
+*/
     public void DB() {
         Conn cn = new Conn();                                         // Obtiene la conexion
         ResultSet rs = null;
@@ -1123,10 +1327,6 @@ public class Main extends javax.swing.JFrame {
     private javax.swing.JButton jButton9;
     private javax.swing.JComboBox jComboBox1;
     private javax.swing.JComboBox jComboBox2;
-    private javax.swing.JDialog jDialog1;
-    private javax.swing.JDialog jDialog2;
-    private javax.swing.JDialog jDialog3;
-    private javax.swing.JDialog jDialog4;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
@@ -1150,6 +1350,10 @@ public class Main extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel28;
     private javax.swing.JLabel jLabel29;
     private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel30;
+    private javax.swing.JLabel jLabel31;
+    private javax.swing.JLabel jLabel32;
+    private javax.swing.JLabel jLabel33;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
@@ -1157,11 +1361,14 @@ public class Main extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JList jList1;
-    private javax.swing.JList jList2;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JMenuItem jMenuItem2;
+    private javax.swing.JMenuItem jMenuItem3;
+    private javax.swing.JMenuItem jMenuItem4;
+    private javax.swing.JMenuItem jMenuItem5;
+    private javax.swing.JMenuItem jMenuItem6;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPasswordField jPasswordField1;
@@ -1171,6 +1378,7 @@ public class Main extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
+    private javax.swing.JScrollPane jScrollPane4;
     private javax.swing.JScrollPane jScrollPane5;
     private javax.swing.JTabbedPane jTabbedPane1;
     private javax.swing.JTable jTable2;
@@ -1182,6 +1390,12 @@ public class Main extends javax.swing.JFrame {
     private javax.swing.JTextField jTextField6;
     private javax.swing.JToggleButton jToggleButton1;
     private javax.swing.JToggleButton jToggleButton2;
+    private javax.swing.JDialog jd_Editor;
+    private javax.swing.JDialog jd_Home;
+    private javax.swing.JDialog jd_Permisos;
+    private javax.swing.JDialog jd_Reporteria;
+    private javax.swing.JList jl_escrituraArchvs;
+    private javax.swing.JList jl_lecturaArchvs;
     // End of variables declaration//GEN-END:variables
 
     ArrayList<Usuario> conectados;
