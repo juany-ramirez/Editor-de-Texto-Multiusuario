@@ -5,6 +5,8 @@
  */
 package textomultiusuario;
 
+import com.thoughtworks.xstream.XStream;
+import com.thoughtworks.xstream.io.xml.DomDriver;
 import java.io.BufferedInputStream;
 import java.io.File;
 import java.io.FileInputStream;
@@ -31,34 +33,34 @@ import javax.xml.namespace.QName;
  *
  * @author Juany
  */
-
-@XmlRootElement(name = "Archivo")
 public class Archivo {
- 
+
     int ID;
-    String Nombre;
-    String Fecha;
-    String Directorio;
-    byte[] Contenido;
     int user;
-    Usuario usuario;
+    String Nombre;
+    ArrayList<Bloque> Contenido;
+    String formato;
+    String directorio;
+
 
     public Archivo() {
-
         this.Nombre = "";
-        this.Fecha = "";
-        this.Directorio = "";
+        Contenido = new ArrayList<>();
     }
 
-    public Archivo(int ID, String Nombre, String Fecha, String Directorio) {
+    public Archivo(int ID, int user, String Nombre, ArrayList<Bloque> Contenido, String formato, String directorio) {
         this.ID = ID;
+        this.user = user;
         this.Nombre = Nombre;
-        this.Fecha = Fecha;
-        this.Directorio = Directorio;
+        this.Contenido = Contenido;
+        this.formato = formato;
+        this.directorio = directorio;
     }
-
-    public String GetFile(String filename) {
-        String Respuesta="";
+    
+    
+    
+/*    public String GetFile(String filename) {
+        /*String Respuesta = "";
         try {
             File file = new File(filename);
             this.Contenido = new byte[(int) file.length()];
@@ -69,47 +71,40 @@ public class Archivo {
                 int bytesRemaining = this.Contenido.length - totalBytesRead;
                 //input.read() returns -1, 0, or more :
                 int bytesRead = input.read(this.Contenido, totalBytesRead, bytesRemaining);
-                
+
                 if (bytesRead > 0) {
                     totalBytesRead = totalBytesRead + bytesRead;
                 }
             }
             for (int i = 0; i < this.Contenido.length; i++) {
-               Respuesta  += String.format("%8s", Integer.toBinaryString(this.Contenido[i] & 0xFF)).replace(' ', '0');
+                Respuesta += String.format("%8s", Integer.toBinaryString(this.Contenido[i] & 0xFF)).replace(' ', '0');
             }
             //Respuesta = "Archivo Leido Exitosamente";
         } catch (Exception ex) {
             Respuesta = "Error: " + ex.toString();
         }
         return Respuesta;
-    }
+    }*/
 
-    public String SerielizarXml() {
-        StringWriter writer = new StringWriter();
-        JAXBContext context;
+    public String SerielizarXml(Archivo dir) {
         try {
-            context = JAXBContext.newInstance(Archivo.class);
-            Marshaller m = context.createMarshaller();
-            m.marshal(this, writer);
-            return writer.toString();
-        } catch (JAXBException ex) {
+            XStream xstream = new XStream(new DomDriver());
+            xstream.alias("Archivo", Archivo.class);
+            String xml = xstream.toXML(dir);
+            return xml;
+        } catch (Exception ex) {
             return "Error";
         }
 
     }
 
     public Archivo DeserielizarXml(String Serial) {
-        StringWriter writer = new StringWriter();
-        Archivo A1 = new Archivo();
-        JAXBContext context;
         try {
-            context = JAXBContext.newInstance(Archivo.class);
-            Unmarshaller m = context.createUnmarshaller();
-            return (Archivo) m.unmarshal(new StringReader(Serial));
-        } catch (JAXBException ex) {
-            Logger.getLogger(Archivo.class.getName()).log(Level.SEVERE, null, ex);
-        } finally {
-            return A1;
+            XStream xstream = new XStream(new DomDriver());
+            Archivo direc = (Archivo) xstream.fromXML(Serial);
+            return direc;
+        } catch (Exception ex) {
+            return null;
         }
     }
 
@@ -134,8 +129,6 @@ public class Archivo {
                 while (rs.next()) {
                     this.ID = rs.getInt("codigoID");
                     this.Nombre = rs.getString("codigoDepartamento");
-                    this.Fecha = rs.getString("codigoCiudad");
-                    this.Directorio = rs.getString("nemo");
                     /* Blob b = rs.getBlob("contenido"); 
                      this.Contenido = b.getBytes(1, b.length()); */
                     i++;
@@ -167,7 +160,6 @@ public class Archivo {
         }
     }
 
-    @XmlElement
     public int getID() {
         return ID;
     }
@@ -176,7 +168,6 @@ public class Archivo {
         this.ID = ID;
     }
 
-    @XmlElement
     public String getNombre() {
         return Nombre;
     }
@@ -185,30 +176,46 @@ public class Archivo {
         this.Nombre = Nombre;
     }
 
-    @XmlElement
-    public String getFecha() {
-        return Fecha;
-    }
-
-    public void setFecha(String Fecha) {
-        this.Fecha = Fecha;
-    }
-
-    @XmlElement
-    public String getDirectorio() {
-        return Directorio;
-    }
-
-    public void setDirectorio(String Directorio) {
-        this.Directorio = Directorio;
-    }
-
-    @XmlElement
-    public byte[] getContenido() {
+    public ArrayList getContenido() {
         return Contenido;
     }
+    
+    public void addContenido(Bloque bloque) {
+        this.Contenido.add(bloque);
+    }
+    
+    public void actualizarContenido(int i, Bloque bloque) {
+        Contenido.set(i, bloque);
+        Contenido.remove((i+1));
+    }
 
-    public void setContenido(byte[] Contenido) {
+    public void setContenido(ArrayList Contenido) {
         this.Contenido = Contenido;
     }
+
+    public int getUser() {
+        return user;
+    }
+
+    public void setUser(int user) {
+        this.user = user;
+    }
+
+    public String getFormato() {
+        return formato;
+    }
+
+    public void setFormato(String formato) {
+        this.formato = formato;
+    }
+
+    public String getDirectorio() {
+        return directorio;
+    }
+
+    public void setDirectorio(String directorio) {
+        this.directorio = directorio;
+    }
+    
+    
 }

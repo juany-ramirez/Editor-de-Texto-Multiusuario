@@ -21,7 +21,7 @@ public class Usuario {
     
     
 
-    public Usuario(String user, String password, String nombre, String apellido, String correo) {
+    public Usuario(int id, String nombre, String apellido, String user, String password, String correo) {
         this.user = user;
         this.password = password;
         this.nombre = nombre;
@@ -32,6 +32,14 @@ public class Usuario {
     public Usuario(String user, String password) {
         this.user = user;
         this.password = password;
+    }
+    
+     public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getUser() {

@@ -9,18 +9,30 @@ package textomultiusuario;
  *
  * @author Admin
  */
-public class Conectado {
+public class Bloque {
+    String contenido;
     boolean conectado;
-    int bloque;
+    
+    public Bloque() {
+    }
+    
+    public Bloque(String contenido) {
+        this.contenido = contenido;
+    }
 
-    public Conectado(){
-    }
-    
-    public Conectado(boolean conectado, int bloque) {
+    public Bloque(String contenido, boolean conectado) {
+        this.contenido = contenido;
         this.conectado = conectado;
-        this.bloque = bloque;
     }
-    
+
+    public String getContenido() {
+        return contenido;
+    }
+
+    public void setContenido(String contenido) {
+        this.contenido = contenido;
+    }
+
     public boolean isConectado() {
         return conectado;
     }
@@ -29,14 +41,6 @@ public class Conectado {
         this.conectado = conectado;
     }
 
-    public int getBloque() {
-        return bloque;
-    }
-
-    public void setBloque(int bloque) {
-        this.bloque = bloque;
-    }
     
     
-            
 }
