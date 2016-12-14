@@ -5,11 +5,16 @@
  */
 package textomultiusuario;
 
+import com.thoughtworks.xstream.annotations.XStreamAlias;
+
 /**
  *
  * @author Admin
  */
+
+@XStreamAlias("Bloque")
 public class Bloque {
+    
     String contenido;
     boolean conectado;
     
@@ -18,6 +23,7 @@ public class Bloque {
     
     public Bloque(String contenido) {
         this.contenido = contenido;
+        conectado = false;
     }
 
     public Bloque(String contenido, boolean conectado) {

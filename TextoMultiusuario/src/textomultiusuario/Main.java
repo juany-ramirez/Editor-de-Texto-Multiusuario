@@ -3,27 +3,32 @@ package textomultiusuario;
 import java.awt.Color;
 import java.awt.Font;
 import java.util.ArrayList;
-import javax.swing.Icon;
-import javax.swing.JButton;
 import javax.swing.JColorChooser;
 import javax.swing.JOptionPane;
 import javax.swing.event.UndoableEditEvent;
 import javax.swing.event.UndoableEditListener;
-import javax.swing.text.AttributeSet;
-import javax.swing.text.Style;
-import javax.swing.text.StyleConstants;
-import javax.swing.text.StyledDocument;
 import javax.swing.undo.CannotRedoException;
 import javax.swing.undo.UndoManager;
-import javax.xml.bind.Element;
 import java.sql.*;  // for standard JDBC programs
-import java.math.*; // for BigDecimal and BigInteger support
-import javax.swing.AbstractListModel;
+import java.text.MessageFormat;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.DefaultListModel;
-import javax.swing.ListModel;
 import javax.swing.table.DefaultTableModel;
-import javax.swing.table.TableModel;
+import com.itextpdf.text.Document;
+import com.itextpdf.text.Paragraph;
+import com.itextpdf.text.pdf.PdfContentByte;
+import com.itextpdf.text.pdf.PdfTemplate;
+import com.itextpdf.text.pdf.PdfWriter;
+import java.awt.Graphics2D;
+import java.io.File;
+import java.io.FileOutputStream;
+import javax.swing.JFileChooser;
+import static javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import javax.swing.JList;
+import javax.swing.JTable;
 
 /**
  *
@@ -45,6 +50,7 @@ public class Main extends javax.swing.JFrame {
                     }
                 });
         bloques = new ArrayList<>();
+        numeroLista = 0;
         //DataBaseInit();
     }
 
@@ -117,6 +123,11 @@ public class Main extends javax.swing.JFrame {
         jMenuItem3 = new javax.swing.JMenuItem();
         jMenuItem4 = new javax.swing.JMenuItem();
         jMenuItem5 = new javax.swing.JMenuItem();
+        jd_Bitacora = new javax.swing.JDialog();
+        jScrollPane6 = new javax.swing.JScrollPane();
+        jTable3 = new javax.swing.JTable();
+        jLabel34 = new javax.swing.JLabel();
+        jLabel35 = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jTextField1 = new javax.swing.JTextField();
@@ -168,14 +179,9 @@ public class Main extends javax.swing.JFrame {
                 jButton3MouseClicked(evt);
             }
         });
-        jd_Home.getContentPane().add(jButton3, new org.netbeans.lib.awtextra.AbsoluteConstraints(590, 70, 410, 150));
+        jd_Home.getContentPane().add(jButton3, new org.netbeans.lib.awtextra.AbsoluteConstraints(600, 70, 410, 150));
 
         jList1.setFont(new java.awt.Font("Tw Cen MT Condensed", 0, 24)); // NOI18N
-        jList1.setModel(new javax.swing.AbstractListModel() {
-            String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
-            public int getSize() { return strings.length; }
-            public Object getElementAt(int i) { return strings[i]; }
-        });
         jList1.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseReleased(java.awt.event.MouseEvent evt) {
                 jList1MouseReleased(evt);
@@ -183,23 +189,23 @@ public class Main extends javax.swing.JFrame {
         });
         jScrollPane1.setViewportView(jList1);
 
-        jd_Home.getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 370, 240, 230));
+        jd_Home.getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 370, 240, 230));
 
         jl_escrituraArchvs.setFont(new java.awt.Font("Tw Cen MT Condensed", 0, 24)); // NOI18N
-        jl_escrituraArchvs.setModel(new javax.swing.AbstractListModel() {
-            String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
-            public int getSize() { return strings.length; }
-            public Object getElementAt(int i) { return strings[i]; }
+        jl_escrituraArchvs.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseReleased(java.awt.event.MouseEvent evt) {
+                jl_escrituraArchvsMouseReleased(evt);
+            }
         });
         jScrollPane2.setViewportView(jl_escrituraArchvs);
 
         jd_Home.getContentPane().add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(890, 370, 190, 230));
 
         jl_lecturaArchvs.setFont(new java.awt.Font("Tw Cen MT Condensed", 0, 24)); // NOI18N
-        jl_lecturaArchvs.setModel(new javax.swing.AbstractListModel() {
-            String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
-            public int getSize() { return strings.length; }
-            public Object getElementAt(int i) { return strings[i]; }
+        jl_lecturaArchvs.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseReleased(java.awt.event.MouseEvent evt) {
+                jl_lecturaArchvsMouseReleased(evt);
+            }
         });
         jScrollPane4.setViewportView(jl_lecturaArchvs);
 
@@ -208,7 +214,7 @@ public class Main extends javax.swing.JFrame {
         jLabel15.setFont(new java.awt.Font("Sylfaen", 1, 36)); // NOI18N
         jLabel15.setForeground(new java.awt.Color(204, 204, 204));
         jLabel15.setText("Mis Archivos");
-        jd_Home.getContentPane().add(jLabel15, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 270, -1, -1));
+        jd_Home.getContentPane().add(jLabel15, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 270, -1, -1));
 
         jLabel31.setFont(new java.awt.Font("Sylfaen", 0, 36)); // NOI18N
         jLabel31.setForeground(new java.awt.Color(204, 204, 204));
@@ -234,7 +240,7 @@ public class Main extends javax.swing.JFrame {
                 jButton4MouseClicked(evt);
             }
         });
-        jd_Home.getContentPane().add(jButton4, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 70, 410, 150));
+        jd_Home.getContentPane().add(jButton4, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 70, 410, 150));
 
         jLabel19.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jLabel19.setForeground(new java.awt.Color(204, 204, 204));
@@ -254,12 +260,21 @@ public class Main extends javax.swing.JFrame {
         jMenuBar1.setForeground(new java.awt.Color(204, 204, 204));
         jMenuBar1.setFont(new java.awt.Font("Segoe UI Light", 0, 24)); // NOI18N
 
-        jMenu1.setText("File ");
-        jMenu1.setFont(new java.awt.Font("Segoe UI Light", 0, 24)); // NOI18N
+        jMenu1.setText("Opciones");
+        jMenu1.setFont(new java.awt.Font("Rockwell", 0, 24)); // NOI18N
 
+        jMenuItem1.setFont(new java.awt.Font("Rockwell", 0, 20)); // NOI18N
+        jMenuItem1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/cog-24.png"))); // NOI18N
         jMenuItem1.setText("Bitacora");
+        jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem1ActionPerformed(evt);
+            }
+        });
         jMenu1.add(jMenuItem1);
 
+        jMenuItem2.setFont(new java.awt.Font("Rockwell", 0, 20)); // NOI18N
+        jMenuItem2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/1-37-24.png"))); // NOI18N
         jMenuItem2.setText("Informacion de Perfil");
         jMenu1.add(jMenuItem2);
 
@@ -290,7 +305,7 @@ public class Main extends javax.swing.JFrame {
                 jButton5MouseClicked(evt);
             }
         });
-        jPanel3.add(jButton5, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 10, 140, 100));
+        jPanel3.add(jButton5, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 10, 140, 100));
 
         jButton6.setBackground(new java.awt.Color(102, 0, 102));
         jButton6.setFont(new java.awt.Font("Tw Cen MT Condensed", 0, 28)); // NOI18N
@@ -384,16 +399,16 @@ public class Main extends javax.swing.JFrame {
                 jLabel30MouseExited(evt);
             }
         });
-        jPanel3.add(jLabel30, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 0, 30, 40));
+        jPanel3.add(jLabel30, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 40, 30, 40));
 
         jTabbedPane1.addTab("Home", jPanel3);
 
         jPanel2.setBackground(new java.awt.Color(153, 153, 153));
         jPanel2.setFont(new java.awt.Font("Segoe UI Light", 0, 24)); // NOI18N
 
-        jButton9.setBackground(new java.awt.Color(0, 102, 153));
+        jButton9.setBackground(new java.awt.Color(119, 119, 0));
         jButton9.setFont(new java.awt.Font("Sylfaen", 0, 18)); // NOI18N
-        jButton9.setForeground(new java.awt.Color(204, 204, 204));
+        jButton9.setForeground(new java.awt.Color(51, 51, 0));
         jButton9.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/floppy-128.png"))); // NOI18N
         jButton9.setText("Guardar");
         jButton9.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -402,15 +417,15 @@ public class Main extends javax.swing.JFrame {
             }
         });
 
-        jButton16.setBackground(new java.awt.Color(0, 102, 153));
+        jButton16.setBackground(new java.awt.Color(119, 119, 0));
         jButton16.setFont(new java.awt.Font("Sylfaen", 0, 18)); // NOI18N
-        jButton16.setForeground(new java.awt.Color(204, 204, 204));
+        jButton16.setForeground(new java.awt.Color(51, 51, 0));
         jButton16.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/Text_files_Microsoft_Word_Document-64.png"))); // NOI18N
         jButton16.setText("Convertir");
 
-        jButton17.setBackground(new java.awt.Color(0, 102, 153));
+        jButton17.setBackground(new java.awt.Color(119, 119, 0));
         jButton17.setFont(new java.awt.Font("Sylfaen", 0, 18)); // NOI18N
-        jButton17.setForeground(new java.awt.Color(204, 204, 204));
+        jButton17.setForeground(new java.awt.Color(51, 51, 0));
         jButton17.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/user_group_users_add_create_new-64.png"))); // NOI18N
         jButton17.setText("Permisos");
         jButton17.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -491,8 +506,8 @@ public class Main extends javax.swing.JFrame {
 
         jTextArea1.setColumns(20);
         jTextArea1.setRows(5);
-        jTextArea1.setText("fajldkfjasdjfalskd;f\naddfjalkdsflka\nfahsdfhasdjfa\nafljhaksdj\n\nfajldkfjasdjfalskd;f\naddfjalkdsflka\nfahsdfhasdjfa\nafljhaksdj\n\nfajldkfjasdjfalskd;f\naddfjalkdsflka\nfahsdfhasdjfa\nafljhaksdj\n\nfajldkfjasdjfalskd;f\naddfjalkdsflka\nfahsdfhasdjfa\nafljhaksdj\n\nfajldkfjasdjfalskd;f\naddfjalkdsflka\nfahsdfhasdjfa\nafljhaksdj\n");
         jScrollPane3.setViewportView(jTextArea1);
+        jTextArea1.setLineWrap(true);
 
         jd_Editor.getContentPane().add(jScrollPane3, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 180, 730, 460));
 
@@ -563,16 +578,19 @@ public class Main extends javax.swing.JFrame {
         });
         jd_Reporteria.getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
+        jTable2.setBackground(new java.awt.Color(102, 102, 102));
+        jTable2.setFont(new java.awt.Font("Sitka Text", 0, 16)); // NOI18N
+        jTable2.setForeground(new java.awt.Color(204, 204, 204));
         jTable2.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
             new String [] {
-                "ID", "ID PROPIETARIO", "NOMBRE", "TAMANO"
+                "ID", "ID PROPIETARIO", "NOMBRE", "TAMANO", "FECHA"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.Integer.class, java.lang.Integer.class, java.lang.String.class, java.lang.Double.class
+                java.lang.Integer.class, java.lang.Integer.class, java.lang.String.class, java.lang.Double.class, java.lang.String.class
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -581,7 +599,7 @@ public class Main extends javax.swing.JFrame {
         });
         jScrollPane5.setViewportView(jTable2);
 
-        jd_Reporteria.getContentPane().add(jScrollPane5, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 170, 820, 470));
+        jd_Reporteria.getContentPane().add(jScrollPane5, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 180, 820, 470));
 
         jButton12.setBackground(new java.awt.Color(0, 102, 102));
         jButton12.setFont(new java.awt.Font("Sylfaen", 1, 24)); // NOI18N
@@ -592,15 +610,15 @@ public class Main extends javax.swing.JFrame {
                 jButton12MouseClicked(evt);
             }
         });
-        jd_Reporteria.getContentPane().add(jButton12, new org.netbeans.lib.awtextra.AbsoluteConstraints(860, 310, 210, 130));
+        jd_Reporteria.getContentPane().add(jButton12, new org.netbeans.lib.awtextra.AbsoluteConstraints(860, 340, 210, 130));
 
-        jLabel29.setFont(new java.awt.Font("Sylfaen", 1, 60)); // NOI18N
-        jLabel29.setForeground(new java.awt.Color(204, 204, 204));
+        jLabel29.setFont(new java.awt.Font("Sylfaen", 1, 80)); // NOI18N
+        jLabel29.setForeground(new java.awt.Color(0, 104, 153));
         jLabel29.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/cloud_data-128.png"))); // NOI18N
-        jLabel29.setText("  R e p o r t e r í a");
-        jd_Reporteria.getContentPane().add(jLabel29, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 0, 800, 160));
+        jLabel29.setText(" R E P O R T E R Í A");
+        jd_Reporteria.getContentPane().add(jLabel29, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 10, 960, 160));
 
-        jLabel24.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/surface_gray_dark_light_shadow_18440_2048x1152.jpg"))); // NOI18N
+        jLabel24.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/start_background_1080p__windows_8__by_zaktech90-d5xn0lk.jpg"))); // NOI18N
         jd_Reporteria.getContentPane().add(jLabel24, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1080, 700));
 
         jMenuItem6.setText("El delimitador ' | ' muestra el nuevo bloque en el archivo");
@@ -618,7 +636,53 @@ public class Main extends javax.swing.JFrame {
         jPopupMenu2.add(jMenuItem4);
 
         jMenuItem5.setText("Permisos");
+        jMenuItem5.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem5ActionPerformed(evt);
+            }
+        });
         jPopupMenu2.add(jMenuItem5);
+
+        jd_Bitacora.addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowActivated(java.awt.event.WindowEvent evt) {
+                jd_BitacoraWindowActivated(evt);
+            }
+        });
+        jd_Bitacora.getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        jTable3.setBackground(new java.awt.Color(102, 102, 102));
+        jTable3.setFont(new java.awt.Font("Sitka Subheading", 0, 18)); // NOI18N
+        jTable3.setForeground(new java.awt.Color(204, 204, 204));
+        jTable3.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {"Usuario conectado", "10:10 p.m."},
+                {"Segundo usuario conectado", "10:30 p.m."}
+            },
+            new String [] {
+                "ACCIÓN", "HORA"
+            }
+        ) {
+            Class[] types = new Class [] {
+                java.lang.String.class, java.lang.String.class
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
+        });
+        jScrollPane6.setViewportView(jTable3);
+
+        jd_Bitacora.getContentPane().add(jScrollPane6, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 210, 980, 440));
+
+        jLabel34.setFont(new java.awt.Font("SimSun", 1, 90)); // NOI18N
+        jLabel34.setForeground(new java.awt.Color(178, 178, 0));
+        jLabel34.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/cog-128 (1).png"))); // NOI18N
+        jLabel34.setText(" B I T Á C O R A");
+        jd_Bitacora.getContentPane().add(jLabel34, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 30, 990, 160));
+
+        jLabel35.setBackground(new java.awt.Color(153, 153, 153));
+        jLabel35.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/kb4ds6lmyquh3cbp.jpg"))); // NOI18N
+        jd_Bitacora.getContentPane().add(jLabel35, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1080, 690));
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -673,12 +737,13 @@ public class Main extends javax.swing.JFrame {
 
         jButton2.setForeground(new java.awt.Color(0, 0, 51));
         jButton2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/add-circle-blue-64.png"))); // NOI18N
+        jButton2.setContentAreaFilled(false);
         jButton2.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 jButton2MouseClicked(evt);
             }
         });
-        getContentPane().add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(740, 410, 100, 90));
+        getContentPane().add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(720, 440, 110, 100));
 
         jLabel12.setFont(new java.awt.Font("Sitka Subheading", 0, 20)); // NOI18N
         jLabel12.setForeground(new java.awt.Color(255, 255, 255));
@@ -793,14 +858,14 @@ public class Main extends javax.swing.JFrame {
     private void jButton14MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton14MouseClicked
         int fs = jTextArea1.getFont().getSize() - 1;
         if (fs >= 1) {
-            jTextArea1.setFont(new Font(jTextArea1.getFont().getFontName(), jTextArea1.getFont().getStyle(), fs));
+            jTextArea1.setFont(new Font(jTextArea1.getFont().getFontName(), Font.PLAIN, fs));
         }
     }//GEN-LAST:event_jButton14MouseClicked
 
     private void jButton13MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton13MouseClicked
         int fs = jTextArea1.getFont().getSize() + 1;
         if (fs >= 1) {
-            jTextArea1.setFont(new Font(jTextArea1.getFont().getFontName(), Font.BOLD, fs));
+            jTextArea1.setFont(new Font(jTextArea1.getFont().getFontName(), Font.PLAIN, fs));
 
         }
     }//GEN-LAST:event_jButton13MouseClicked
@@ -827,8 +892,7 @@ public class Main extends javax.swing.JFrame {
     private void jComboBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox1ActionPerformed
         // TODO add your handling code here:
         String font = (String) jComboBox1.getSelectedItem();
-        jTextArea1.setFont(new Font(font, Font.BOLD, jTextArea1.getFont().getSize()));
-
+        FontStyle(font);
     }//GEN-LAST:event_jComboBox1ActionPerformed
 
     private void jd_HomeWindowClosed(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_jd_HomeWindowClosed
@@ -889,7 +953,7 @@ public class Main extends javax.swing.JFrame {
             while (rs.next()) {
                 String q = rs.getInt("idusuario") + "-" + rs.getString("nombre") + " " + rs.getString("apellido");
                 System.out.println(q);
-                if(rs.getInt("idusuario")!=Integer.parseInt(jLabel19.getText())){
+                if (rs.getInt("idusuario") != Integer.parseInt(jLabel19.getText())) {
                     modelo.addElement(q);
                 }
             }
@@ -906,56 +970,82 @@ public class Main extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton17MouseClicked
 
     private void jButton18MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton18MouseClicked
-        boolean pase = false;
-        if (jLabel28.getText() == "") {
-            //********************************************************************************************************************************************************
-            //Guardar();
-        }
-        try {
-            Connection con = (Connection) DriverManager.getConnection("jdbc:mysql://localhost/datab", "root", "qwaszx12");
-            Statement st = con.createStatement();
-            int permi = 1;
-            boolean escogido = false;
-            if (jToggleButton2.isSelected()) {
-                escogido = true;
-                permi = 1;
-            } else if (jToggleButton1.isSelected()) {
-                escogido = true;
-                permi = 2;
-            }
-            if (escogido) {
-                DefaultComboBoxModel modelo = (DefaultComboBoxModel) jComboBox2.getModel();
-                String pp = (String) modelo.getSelectedItem();
-                String[] persona = pp.split("-");
-                System.out.println("===============");
-                System.out.println(pp);
-                for (int i = 0; i < persona.length; i++) {
-                    System.out.println(persona[i]);
-                }
+        boolean existente = false;
 
-                String Query = "insert into permiso "
-                        + "(permiso, usuario_idusuario, archivo_idarchivo) "
-                        + "values ('" + permi + "', '" + (Integer.parseInt(persona[0])) + "', '" + (Integer.parseInt(jLabel28.getText())) + "')";
-                System.out.println(Query);
-                st.executeUpdate(Query);
-            } else {
-                JOptionPane.showMessageDialog(this, "Error, seleccione una opcion");
+        if (jLabel28.getText() == "") {
+            Guardar();
+        }
+        int permi = 1;
+        boolean escogido = false;
+        if (jToggleButton2.isSelected()) {
+            escogido = true;
+            permi = 1;
+        } else if (jToggleButton1.isSelected()) {
+            escogido = true;
+            permi = 2;
+        }
+        DefaultComboBoxModel modelo = (DefaultComboBoxModel) jComboBox2.getModel();
+        String pp = (String) modelo.getSelectedItem();
+        String[] persona = pp.split("-");
+
+        Connection con = null;
+        Statement st = null;
+        ResultSet rs = null;
+        int idusuario =  (Integer.parseInt(persona[0]));
+        int idarchivo =  Integer.parseInt(jLabel19.getText());
+        try {
+            con = (Connection) DriverManager.getConnection("jdbc:mysql://localhost/datab", "root", "qwaszx12");
+            st = con.createStatement();
+            rs = st.executeQuery("select * from permiso");
+            while (rs.next()) {
+                if ((rs.getInt("usuario_idusuario") == idusuario)
+                    && ((rs.getInt("archivo_idarchivo") == idarchivo))) {
+                    existente = true;
+                    System.out.println("ENTRO A CONDICION PERMISO EXISTENTE");
+                }
             }
-            pase = true;
         } catch (Exception e) {
             e.printStackTrace();
         }
-        if (pase == false) {
-            JOptionPane.showMessageDialog(this, "Error en almacenamiento");
+        if (existente){
+            try {
+                con = (Connection) DriverManager.getConnection("jdbc:mysql://localhost/datab", "root", "qwaszx12");
+                st = con.createStatement();
+                String query = "UPDATE permiso SET permiso = '" + permi
+                        + "' WHERE (usuario_idusuario= '" + idusuario +
+                        "' AND archivo_idarchivo= '"+idarchivo+"')";
+                st.executeUpdate(query);
+                JOptionPane.showMessageDialog(this, "Se ha actualizado el permiso");
+            } catch (Exception ex) {
+                ex.printStackTrace();
+                JOptionPane.showMessageDialog(this, "Error en almacenamiento");
+            }
         } else {
-            JOptionPane.showMessageDialog(this, "Se ha creado el permiso");
+            try {
+                con = (Connection) DriverManager.getConnection("jdbc:mysql://localhost/datab", "root", "qwaszx12");
+                st = con.createStatement();
 
+                if (escogido) {
+                    String Query = "insert into permiso "
+                            + "(permiso, usuario_idusuario, archivo_idarchivo)"
+                            + "values ('" + permi + "', '" + idusuario + "', '" + idarchivo + "')";
+                    System.out.println(Query);
+                    st.executeUpdate(Query);
+                } else {
+                    JOptionPane.showMessageDialog(this, "Error, seleccione una opcion");
+                }
+                JOptionPane.showMessageDialog(this, "Se ha creado el permiso");
+            } catch (Exception e) {
+                e.printStackTrace();
+                JOptionPane.showMessageDialog(this, "Error en almacenamiento");
+            }
         }
+        jToggleButton2.setSelected(false);
+        jToggleButton1.setSelected(false);
     }//GEN-LAST:event_jButton18MouseClicked
 
     private void jButton9MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton9MouseClicked
-        //********************************************************************************************************************************************************
-        //Guardar();
+        Guardar();
     }//GEN-LAST:event_jButton9MouseClicked
 
     private void jToggleButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jToggleButton1ActionPerformed
@@ -975,7 +1065,44 @@ public class Main extends javax.swing.JFrame {
     }//GEN-LAST:event_jToggleButton2ActionPerformed
 
     private void jButton12MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton12MouseClicked
-        // TODO add your handling code here:
+        try {
+            JFileChooser chooser = new JFileChooser();
+            chooser.setCurrentDirectory(new File("C:\\Users\\Admin\\Editor-de-Texto-Multiusuario\\TextoMultiusuario\\src"));
+            int retrival = chooser.showSaveDialog(null);
+            if (retrival == JFileChooser.APPROVE_OPTION) {
+                Document document = new Document();
+                PdfWriter writer;
+                File file = new File(chooser.getSelectedFile() + ".pdf");
+                //file.mkdirs(); //!wrong  
+                file.getParentFile().mkdirs();//!correct
+                if (!file.exists()) {
+                    file.createNewFile();
+                }
+                writer = PdfWriter.getInstance(document, new FileOutputStream(file.getPath()));
+                // writer = PdfWriter.getInstance(document, new
+                // FileOutputStream("my_jtable_fonts.pdf"));
+                document.open();
+
+                PdfContentByte cb = writer.getDirectContent();
+
+                PdfTemplate tp = cb.createTemplate(500, 500);
+                Graphics2D g2;
+
+                g2 = tp.createGraphicsShapes(500, 500);
+
+                // g2 = tp.createGraphics(500, 500);
+                jTable2.print(g2);
+                g2.dispose();
+                cb.addTemplate(tp, 30, 300);
+
+                // step 5: we close the document
+                document.close();
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
     }//GEN-LAST:event_jButton12MouseClicked
 
     private void jd_ReporteriaWindowActivated(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_jd_ReporteriaWindowActivated
@@ -987,17 +1114,18 @@ public class Main extends javax.swing.JFrame {
             Connection con = (Connection) DriverManager.getConnection("jdbc:mysql://localhost/datab", "root", "qwaszx12");
             Statement st = con.createStatement();
             ResultSet rs = st.executeQuery("select * from archivo");
-            String nombre, contenido;
+            String nombre, contenido, fecha;
             int id, iduser, size;
             while (rs.next()) {
                 id = rs.getInt("idarchivo");
                 iduser = rs.getInt("usuario_idusuario");
                 nombre = rs.getString("nombre");
                 contenido = rs.getString("contenido");
+                fecha = rs.getString("fecha");
                 byte[] b = contenido.getBytes("UTF-8");
                 size = b.length;
                 System.out.println(id + " " + iduser + " " + nombre + " " + size);
-                dtm.addRow(new Object[]{id, iduser, nombre, size});
+                dtm.addRow(new Object[]{id, iduser, nombre, size, fecha});
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -1011,13 +1139,55 @@ public class Main extends javax.swing.JFrame {
 
     private void jMenuItem3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem3ActionPerformed
         // ABRIR ARCHIVO
-        Archivo a = (Archivo) jList1.getSelectedValue();
+        ResultSet rs = null;
+        Statement st = null;
+        Connection con = null;
+        try {
+            if (jList1.getSelectedIndex() != -1) {
+                con = (Connection) DriverManager.getConnection("jdbc:mysql://localhost/datab", "root", "qwaszx12");
+                st = con.createStatement();
 
+                String[] persona = ((String) jList1.getSelectedValue()).split("-");
+                int idarchv = (Integer.parseInt(persona[0]));
+                String XMLA;
+                try {
+                    rs = st.executeQuery("SELECT * FROM archivo WHERE idarchivo='" + idarchv + "'");
+                    rs.next();
+                    XMLA = rs.getString("contenido");
+                } catch (Exception e) {
+                    XMLA = "ERROR EXTRAYENDO XML";
+                    System.err.printf(XMLA, e);
+                }
+                Archivo arch = new Archivo();
+                arch = arch.DeserielizarXml(XMLA);
+                System.out.println(arch.ID);
+                jLabel28.setText(arch.ID + "");
+                jLabel27.setText(arch.Nombre);
+                jTextArea1.setText("");
+                if (arch.Contenido != null) {
+                    for (int i = 0; i < arch.Contenido.size(); i++) {
+                        jTextArea1.append(((Bloque) arch.Contenido.get(i)).contenido + "\n");
+                    }
+                }
+                String[] form = arch.formato.split(";");
+                jTextArea1.setFont(new Font(jTextArea1.getFont().getFontName(), Font.PLAIN, Integer.parseInt(form[0])));
+                FontStyle(form[1]);
+                jd_Editor.pack();
+                jd_Editor.setModal(true);
+                jd_Editor.setVisible(true);
+            } else {
+                JOptionPane.showMessageDialog(this, "Error!\n Seleccionar archivo");
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            JOptionPane.showMessageDialog(this, "Error no se ha encontrado el registro");
+        }
     }//GEN-LAST:event_jMenuItem3ActionPerformed
 
     private void jList1MouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jList1MouseReleased
+        numeroLista = 1;
         if (evt.isPopupTrigger()) {
-            jPopupMenu2.show(this, evt.getX(), evt.getY());
+            jPopupMenu2.show(jList1, evt.getX(), evt.getY());
         }
     }//GEN-LAST:event_jList1MouseReleased
 
@@ -1027,56 +1197,44 @@ public class Main extends javax.swing.JFrame {
         try {
             Connection con = (Connection) DriverManager.getConnection("jdbc:mysql://localhost/datab", "root", "qwaszx12");
             Statement st = con.createStatement();
-            ResultSet rs = st.executeQuery("select * from archivo WHERE usuario_idusuario="+Integer.parseInt(jLabel19.getText()));
+            ResultSet rs = st.executeQuery("select * from archivo WHERE usuario_idusuario=" + Integer.parseInt(jLabel19.getText()));
             String nombre, contenido, formato, directorio;
             int id, iduser;
+            String q;
             while (rs.next()) {
-                id = rs.getInt("idarchivo");
-                iduser = rs.getInt("usuario_idusuario");
-                nombre = rs.getString("nombre");
-                contenido = rs.getString("contenido");
-                formato = rs.getString("formato");
-                directorio = rs.getString("directorio");
-                dtm.addElement(new Archivo(id, iduser, nombre, contenido, formato, directorio));
-                //(int ID, int user, String Nombre, ArrayList<Bloque> Contenido, String formato, String directorio) {
+                q = rs.getInt("idarchivo") + "-" + rs.getString("nombre");
+                System.out.println(q);
+                dtm.addElement(q);
             }
         } catch (Exception e) {
             e.printStackTrace();
         }
         DefaultListModel dtml = new DefaultListModel();
         jl_lecturaArchvs.setModel(dtml);
-        
+
         DefaultListModel dtme = new DefaultListModel();
         jl_escrituraArchvs.setModel(dtme);
-        
-        
+        String q;
         try {
+
             Connection con = (Connection) DriverManager.getConnection("jdbc:mysql://localhost/datab", "root", "qwaszx12");
             Statement st = con.createStatement();
-            ResultSet rs = st.executeQuery("select * from permiso WHERE usuario_idusuario="+Integer.parseInt(jLabel19.getText()));
+            ResultSet rs = st.executeQuery("select * from permiso WHERE usuario_idusuario=" + Integer.parseInt(jLabel19.getText()));
             int id1 = 1, idarch1 = 0;
             while (rs.next()) {
                 id1 = rs.getInt("permiso");
                 idarch1 = rs.getInt("archivo_idarchivo");
-            }
-            Connection conn = (Connection) DriverManager.getConnection("jdbc:mysql://localhost/datab", "root", "qwaszx12");
-            Statement stt = conn.createStatement();
-            ResultSet rss = stt.executeQuery("select * from archivo WHERE idarchivo="+idarch1);
-            String nombre, contenido, formato, directorio;
-            int id, iduser;
-            while (rss.next()) {
-                id = rss.getInt("idarchivo");
-                iduser = rss.getInt("usuario_idusuario");
-                nombre = rss.getString("nombre");
-                contenido = rss.getString("contenido");
-                formato = rss.getString("formato");
-                directorio = rss.getString("directorio");
-                if(id1 == 1){
-                    dtml.addElement(new Archivo(id, iduser, nombre, contenido, formato, directorio));
-                }else if(id1 == 2){
-                    dtme.addElement(new Archivo(id, iduser, nombre, contenido, formato, directorio));
+                Connection conn = (Connection) DriverManager.getConnection("jdbc:mysql://localhost/datab", "root", "qwaszx12");
+                Statement stt = conn.createStatement();
+                ResultSet rss = stt.executeQuery("select * from archivo WHERE idarchivo=" + idarch1);
+                while (rss.next()) {
+                    q = rss.getInt("idarchivo") + "-" + rss.getString("nombre");
+                    if (id1 == 1) {
+                        dtml.addElement(q);
+                    } else if (id1 == 2) {
+                        dtme.addElement(q);
+                    }
                 }
-                //(int ID, int user, String Nombre, ArrayList<Bloque> Contenido, String formato, String directorio) {
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -1104,13 +1262,81 @@ public class Main extends javax.swing.JFrame {
     }//GEN-LAST:event_jd_HomeWindowClosing
 
     private void jLabel30MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel30MouseEntered
-        jPopupMenu2.show(this, evt.getX(), evt.getY());
+        //jPopupMenu2.show(this, evt.getX(), evt.getY());
     }//GEN-LAST:event_jLabel30MouseEntered
 
     private void jLabel30MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel30MouseExited
-        jPopupMenu2.show(false);
+        //jPopupMenu2.show(false);
     }//GEN-LAST:event_jLabel30MouseExited
-/*
+
+    private void jd_BitacoraWindowActivated(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_jd_BitacoraWindowActivated
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jd_BitacoraWindowActivated
+
+    private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
+        jd_Bitacora.pack();
+        jd_Bitacora.setVisible(true);
+    }//GEN-LAST:event_jMenuItem1ActionPerformed
+
+    private void jMenuItem5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem5ActionPerformed
+        ResultSet rs = null;
+        Statement st = null;
+        Connection con = null;
+        JList jlis = new JList();
+        if (numeroLista == 1) {
+            jlis.setModel(jList1.getModel());
+        } else if (numeroLista == 2) {
+            jlis.setModel(jl_lecturaArchvs.getModel());
+        } else {
+            jlis.setModel(jl_escrituraArchvs.getModel());
+        }
+        try {
+            if (jlis.getSelectedIndex() != -1) {
+                con = (Connection) DriverManager.getConnection("jdbc:mysql://localhost/datab", "root", "qwaszx12");
+                st = con.createStatement();
+                String[] persona = ((String) jlis.getSelectedValue()).split("-");
+                int idarchv = (Integer.parseInt(persona[0]));
+                String XMLA;
+                try {
+                    rs = st.executeQuery("SELECT * FROM archivo WHERE idarchivo='" + idarchv + "'");
+                    rs.next();
+                    XMLA = rs.getString("contenido");
+                } catch (Exception e) {
+                    XMLA = "ERROR EXTRAYENDO XML";
+                    System.err.printf(XMLA, e);
+                }
+                Archivo arch = new Archivo();
+                arch = arch.DeserielizarXml(XMLA);
+                jLabel28.setText(arch.ID + "");
+                jLabel27.setText(arch.Nombre);
+                jTextArea1.setText("");
+                jd_Permisos.pack();
+                jd_Permisos.setModal(true);
+                jd_Permisos.setVisible(true);
+            } else {
+                JOptionPane.showMessageDialog(this, "Error!\n Seleccionar archivo");
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            JOptionPane.showMessageDialog(this, "Error no se ha encontrado el registro");
+
+        }
+    }//GEN-LAST:event_jMenuItem5ActionPerformed
+
+    private void jl_lecturaArchvsMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jl_lecturaArchvsMouseReleased
+        numeroLista = 2;
+        if (evt.isPopupTrigger()) {
+            jPopupMenu2.show(jList1, evt.getX(), evt.getY());
+        }
+    }//GEN-LAST:event_jl_lecturaArchvsMouseReleased
+
+    private void jl_escrituraArchvsMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jl_escrituraArchvsMouseReleased
+        numeroLista = 3;
+        if (evt.isPopupTrigger()) {
+            jPopupMenu2.show(jList1, evt.getX(), evt.getY());
+        }
+    }//GEN-LAST:event_jl_escrituraArchvsMouseReleased
+
     public void Guardar() {
         boolean pase = false;
         //if(jLabel28.getText()!= null)
@@ -1122,42 +1348,76 @@ public class Main extends javax.swing.JFrame {
             st = con.createStatement();
             int permi = 1;
             String nombre_archivo = null;
+
             if (jLabel28.getText().equals("")) {
                 nombre_archivo = JOptionPane.showInputDialog("Ingrese el nombre del documento: ");
-            } else {
-                nombre_archivo = jLabel27.getText();
-            }
-            int idarchv;
+                int idarchv;
+                try {
+                    rs = st.executeQuery("SELECT * FROM archivo WHERE idarchivo=(SELECT MAX(idarchivo) FROM archivo)");
+                    rs.next();
+                    idarchv = rs.getInt("idarchivo") + 1;
+                } catch (Exception e) {
+                    idarchv = 1;
+                }
+                String[] bb = jTextArea1.getText().split("\n");
+                ArrayList<Bloque> bloqs = new ArrayList<>();
 
-            try {
-                rs = st.executeQuery("SELECT * FROM archivo WHERE idarchivo=(SELECT MAX(idarchivo) FROM archivo)");
-                rs.next();
-                idarchv = rs.getInt("idarchivo") + 1;
-            } catch (Exception e) {
-                idarchv = 1;
+                for (int i = 0; i < bb.length; i++) {
+                    bloqs.add(new Bloque(bb[i]));
+                }
+                String forma = jTextArea1.getFont().getSize() + ";"
+                        + (String) jComboBox1.getSelectedItem();
+                String dateString = null;
+
+                Date todaysDate = new Date();
+                DateFormat df = new SimpleDateFormat("dd/MM/yyyy");
+                String testDateString = df.format(todaysDate);
+
+                Archivo arch = new Archivo(
+                        idarchv,
+                        Integer.parseInt(jLabel19.getText()),
+                        nombre_archivo,
+                        bloqs,
+                        forma,
+                        testDateString);
+
+                String xml = arch.SerielizarXml(arch);
+                DefaultComboBoxModel modelo = (DefaultComboBoxModel) jComboBox2.getModel();
+                String[] persona = ((String) modelo.getSelectedItem()).split(".");
+                String Query = "insert into archivo "
+                        + "(idarchivo, usuario_idusuario, nombre, contenido, formato, fecha) "
+                        + "values ('" + idarchv + "', '" + arch.user
+                        + "', '" + nombre_archivo + "', '" + xml
+                        + "', '" + forma + "', '" + testDateString + "')";
+                st.executeUpdate(Query);
+                jLabel28.setText(idarchv + "");
+                jLabel27.setText(nombre_archivo);
+            } else {
+                String idarchv = jLabel28.getText();
+                String XMLA;
+                try {
+                    rs = st.executeQuery("SELECT * FROM archivo WHERE idarchivo='" + idarchv + "'");
+                    rs.next();
+                    XMLA = rs.getString("contenido");
+                } catch (Exception e) {
+                    XMLA = "ERROR EXTRAYENDO XML";
+                    System.err.printf(XMLA, e);
+                }
+                Archivo nuevo = new Archivo();
+                nuevo = nuevo.DeserielizarXml(XMLA);
+                String[] bb = jTextArea1.getText().split("\n");
+                ArrayList<Bloque> bloqs = new ArrayList<>();
+                for (int i = 0; i < bb.length; i++) {
+                    bloqs.add(new Bloque(bb[i]));
+                }
+                nuevo.setContenido(bloqs);
+                String forma = jTextArea1.getFont().getSize() + ";"
+                        + (String) jComboBox1.getSelectedItem();
+                String query = "UPDATE archivo SET contenido = '" + (nuevo.SerielizarXml(nuevo))
+                        + "', formato = '" + forma + "' WHERE idarchivo= " + idarchv + "";
+                st.executeUpdate(query);
             }
-            ArrayList<Bloque> bloqs = new ArrayList<>();
-            bloqs.add(null);
-            String forma = jTextArea1.getFont().getSize() + ";"
-                    + (String) jComboBox1.getSelectedItem();
-            Archivo arch = new Archivo(
-                    idarchv,
-                    Integer.parseInt(jLabel19.getText()),
-                    nombre_archivo,
-                    bloques,
-                    forma, "/");
-            String xml = arch.SerielizarXml(arch);
-            DefaultComboBoxModel modelo = (DefaultComboBoxModel) jComboBox2.getModel();
-            String[] persona = ((String) modelo.getSelectedItem()).split(".");
-            String Query = "insert into archivo "
-                    + "(idarchivo, usuario_idusuario, nombre, contenido, formato, directorio) "
-                    + "values ('" + idarchv + "', '" + arch.user
-                    + "', '" + nombre_archivo + "', '" + xml
-                    + "', '" + forma + "', '/')";
-            System.out.println(Query);
-            st.executeUpdate(Query);
-            jLabel28.setText(idarchv + "");
-            jLabel27.setText(nombre_archivo);
+
             pase = true;
         } catch (Exception e) {
             e.printStackTrace();
@@ -1182,81 +1442,6 @@ public class Main extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, "Se ha almacenado el archivo");
         }
     }
-*/
-    public void DB() {
-        Conn cn = new Conn();                                         // Obtiene la conexion
-        ResultSet rs = null;
-        Statement stmt = null;
-        String Err = "";
-        int i = 0;
-        Connection conn = null;
-        try {
-            String IP;
-            String Puerto;
-            String BD;
-            String Usuario;
-            String Clave;
-            try {
-                /*Datos de la BD*/
-                IP = "localhost";
-                Puerto = "33066";
-                BD = "datab";
-                Usuario = "root";
-                Clave = "qwaszx12";
-                String driver = "com.mysql.jdbc.Driver";
-                String url = "jdbc:mysql://" + IP + ":" + Puerto + "/" + BD
-                        + "?noAccessToProcedureBodies=true&amp;zeroDateTimeBehavior=convertToNull";
-                Class.forName(driver);
-                conn = DriverManager.getConnection("jdbc:mysql:loadbalance://localhost:3306,localhost:3310/sakila", Usuario, Clave);
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-            /*Crear la conexion a la base de datos */
-            if (conn == null) {
-                Err = "Error de Conexion a la BD";
-            } else {
-                stmt = conn.createStatement();
-                rs = stmt.executeQuery("select idUsuario, nombre, apellido, username, password, correo \n"
-                        + "FROM orgarc.archivos c \n");
-                /*Carga los datos de la base de datos a las propiedades de la clase*/
-                while (rs.next()) {
-                    System.out.println(rs.getInt("idUsuario"));
-                    System.out.println(rs.getString("nombre"));
-                    System.out.println(rs.getString("apellido"));
-                    System.out.println(rs.getString("username"));
-                    System.out.println(rs.getString("password"));
-                    System.out.println(rs.getString("correo"));
-                    /* Blob b = rs.getBlob("contenido"); 
-                     this.Contenido = b.getBytes(1, b.length()); */
-                    i++;
-                }
-                if (i == 0) {
-                    Err = "Error la consulta no devolvio registros";
-                } else {
-                    Err = "Consulta de registro exitosa";
-                }
-                System.out.println(Err);
-            }
-        } catch (Exception ex) {
-            Err = ex.toString();
-            System.out.println(Err);
-        } finally {
-            try {
-                if (rs != null) {
-                    rs.close();
-                }
-                if (stmt != null) {
-                    stmt.close();
-                }
-                if (cn.conn != null) {
-                    cn.conn.close();
-                }
-            } catch (SQLException e) {
-                Err = e.toString();
-            }
-        }
-
-    }
 
     public void DataBaseInit() {
         try {
@@ -1269,6 +1454,26 @@ public class Main extends javax.swing.JFrame {
             con.close();
         } catch (Exception e) {
             e.printStackTrace();
+        }
+    }
+
+    public void FontStyle(String font) {
+        switch (font) {
+            case "Arial":
+                jTextArea1.setFont(new Font("Arial", Font.PLAIN, jTextArea1.getFont().getSize()));
+                break;
+            case "Times New Roman":
+                jTextArea1.setFont(new Font("Times New Roman", Font.PLAIN, jTextArea1.getFont().getSize()));
+                break;
+            case "Copperplate":
+                jTextArea1.setFont(new Font("Copperplate", Font.PLAIN, jTextArea1.getFont().getSize()));
+                break;
+            case "Serif":
+                jTextArea1.setFont(new Font("Serif", Font.PLAIN, jTextArea1.getFont().getSize()));
+                break;
+            case "Verdana":
+                jTextArea1.setFont(new Font("Verdana", Font.PLAIN, jTextArea1.getFont().getSize()));
+                break;
         }
     }
 
@@ -1354,6 +1559,8 @@ public class Main extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel31;
     private javax.swing.JLabel jLabel32;
     private javax.swing.JLabel jLabel33;
+    private javax.swing.JLabel jLabel34;
+    private javax.swing.JLabel jLabel35;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
@@ -1380,8 +1587,10 @@ public class Main extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JScrollPane jScrollPane4;
     private javax.swing.JScrollPane jScrollPane5;
+    private javax.swing.JScrollPane jScrollPane6;
     private javax.swing.JTabbedPane jTabbedPane1;
     private javax.swing.JTable jTable2;
+    private javax.swing.JTable jTable3;
     private javax.swing.JTextArea jTextArea1;
     private javax.swing.JTextField jTextField1;
     private javax.swing.JTextField jTextField2;
@@ -1390,6 +1599,7 @@ public class Main extends javax.swing.JFrame {
     private javax.swing.JTextField jTextField6;
     private javax.swing.JToggleButton jToggleButton1;
     private javax.swing.JToggleButton jToggleButton2;
+    private javax.swing.JDialog jd_Bitacora;
     private javax.swing.JDialog jd_Editor;
     private javax.swing.JDialog jd_Home;
     private javax.swing.JDialog jd_Permisos;
@@ -1402,5 +1612,6 @@ public class Main extends javax.swing.JFrame {
     ArrayList<Bloque> bloques;
     UndoManager undo = new UndoManager();
     Usuario AdminUsuario;
+    int numeroLista;
 
 }
