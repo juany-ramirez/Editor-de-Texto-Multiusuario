@@ -15,12 +15,17 @@ import javax.swing.DefaultComboBoxModel;
 import javax.swing.DefaultListModel;
 import javax.swing.table.DefaultTableModel;
 import com.itextpdf.text.Document;
+import com.itextpdf.text.PageSize;
 import com.itextpdf.text.Paragraph;
+import com.itextpdf.text.pdf.BaseFont;
 import com.itextpdf.text.pdf.PdfContentByte;
 import com.itextpdf.text.pdf.PdfTemplate;
 import com.itextpdf.text.pdf.PdfWriter;
 import java.awt.Graphics2D;
+import java.awt.List;
+import java.io.BufferedInputStream;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import javax.swing.JFileChooser;
 import static javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER;
@@ -29,6 +34,21 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import javax.swing.JList;
 import javax.swing.JTable;
+import javax.swing.RowSorter;
+import javax.swing.SortOrder;
+import javax.swing.table.TableModel;
+import javax.swing.table.TableRowSorter;
+import java.io.IOException;
+import java.net.InetAddress;
+import java.net.SocketException;
+import java.net.UnknownHostException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import org.apache.commons.net.ftp.FTP;
+import org.apache.commons.net.ftp.FTPClient;
+import org.apache.commons.net.ftp.FTPReply;
+//import org.apache.commons.net.ftp.FTPClient;
+//import org.apache.commons.net.ftp.FTPReply;
 
 /**
  *
@@ -100,6 +120,7 @@ public class Main extends javax.swing.JFrame {
         jLabel26 = new javax.swing.JLabel();
         jLabel27 = new javax.swing.JLabel();
         jLabel28 = new javax.swing.JLabel();
+        jButton10 = new javax.swing.JButton();
         jScrollPane3 = new javax.swing.JScrollPane();
         jTextArea1 = new javax.swing.JTextArea();
         jLabel11 = new javax.swing.JLabel();
@@ -158,14 +179,8 @@ public class Main extends javax.swing.JFrame {
             public void windowActivated(java.awt.event.WindowEvent evt) {
                 jd_HomeWindowActivated(evt);
             }
-            public void windowClosed(java.awt.event.WindowEvent evt) {
-                jd_HomeWindowClosed(evt);
-            }
             public void windowClosing(java.awt.event.WindowEvent evt) {
                 jd_HomeWindowClosing(evt);
-            }
-            public void windowDeactivated(java.awt.event.WindowEvent evt) {
-                jd_HomeWindowDeactivated(evt);
             }
         });
         jd_Home.getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -406,7 +421,7 @@ public class Main extends javax.swing.JFrame {
         jPanel2.setBackground(new java.awt.Color(153, 153, 153));
         jPanel2.setFont(new java.awt.Font("Segoe UI Light", 0, 24)); // NOI18N
 
-        jButton9.setBackground(new java.awt.Color(119, 119, 0));
+        jButton9.setBackground(new java.awt.Color(102, 102, 0));
         jButton9.setFont(new java.awt.Font("Sylfaen", 0, 18)); // NOI18N
         jButton9.setForeground(new java.awt.Color(51, 51, 0));
         jButton9.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/floppy-128.png"))); // NOI18N
@@ -417,16 +432,16 @@ public class Main extends javax.swing.JFrame {
             }
         });
 
-        jButton16.setBackground(new java.awt.Color(119, 119, 0));
+        jButton16.setBackground(new java.awt.Color(102, 102, 0));
         jButton16.setFont(new java.awt.Font("Sylfaen", 0, 18)); // NOI18N
         jButton16.setForeground(new java.awt.Color(51, 51, 0));
-        jButton16.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/Text_files_Microsoft_Word_Document-64.png"))); // NOI18N
+        jButton16.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/docx_file_name_extension-64.png"))); // NOI18N
         jButton16.setText("Convertir");
 
-        jButton17.setBackground(new java.awt.Color(119, 119, 0));
+        jButton17.setBackground(new java.awt.Color(102, 102, 0));
         jButton17.setFont(new java.awt.Font("Sylfaen", 0, 18)); // NOI18N
         jButton17.setForeground(new java.awt.Color(51, 51, 0));
-        jButton17.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/user_group_users_add_create_new-64.png"))); // NOI18N
+        jButton17.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/68-64.png"))); // NOI18N
         jButton17.setText("Permisos");
         jButton17.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -446,22 +461,35 @@ public class Main extends javax.swing.JFrame {
         jLabel28.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jLabel28.setForeground(new java.awt.Color(204, 204, 204));
 
+        jButton10.setBackground(new java.awt.Color(102, 102, 0));
+        jButton10.setFont(new java.awt.Font("Sylfaen", 0, 18)); // NOI18N
+        jButton10.setForeground(new java.awt.Color(51, 51, 0));
+        jButton10.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/64_web_hosting-64.png"))); // NOI18N
+        jButton10.setText("FTP");
+        jButton10.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jButton10MouseClicked(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jLabel28, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, 0)
-                .addComponent(jLabel27, javax.swing.GroupLayout.PREFERRED_SIZE, 220, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(44, 44, 44)
-                .addComponent(jButton9)
+                .addComponent(jLabel28, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel27, javax.swing.GroupLayout.PREFERRED_SIZE, 183, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
+                .addComponent(jButton9, javax.swing.GroupLayout.PREFERRED_SIZE, 161, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jButton10)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jButton16)
-                .addGap(18, 18, 18)
-                .addComponent(jButton17)
-                .addGap(113, 113, 113))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jButton17, javax.swing.GroupLayout.PREFERRED_SIZE, 167, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(229, 229, 229))
             .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(jPanel2Layout.createSequentialGroup()
                     .addGap(0, 0, Short.MAX_VALUE)
@@ -486,7 +514,8 @@ public class Main extends javax.swing.JFrame {
                     .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(jButton9, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(jButton16, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(jButton17, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(jButton17, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jButton10, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(33, 33, 33))
             .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(jPanel2Layout.createSequentialGroup()
@@ -506,6 +535,11 @@ public class Main extends javax.swing.JFrame {
 
         jTextArea1.setColumns(20);
         jTextArea1.setRows(5);
+        jTextArea1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseReleased(java.awt.event.MouseEvent evt) {
+                jTextArea1MouseReleased(evt);
+            }
+        });
         jScrollPane3.setViewportView(jTextArea1);
         jTextArea1.setLineWrap(true);
 
@@ -572,8 +606,8 @@ public class Main extends javax.swing.JFrame {
         jd_Permisos.getContentPane().add(jLabel17, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 970, 620));
 
         jd_Reporteria.addWindowListener(new java.awt.event.WindowAdapter() {
-            public void windowActivated(java.awt.event.WindowEvent evt) {
-                jd_ReporteriaWindowActivated(evt);
+            public void windowOpened(java.awt.event.WindowEvent evt) {
+                jd_ReporteriaWindowOpened(evt);
             }
         });
         jd_Reporteria.getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -586,11 +620,11 @@ public class Main extends javax.swing.JFrame {
 
             },
             new String [] {
-                "ID", "ID PROPIETARIO", "NOMBRE", "TAMANO", "FECHA"
+                "ID", "NOMBRE", "TAMANO", "FECHA", "OWNER"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.Integer.class, java.lang.Integer.class, java.lang.String.class, java.lang.Double.class, java.lang.String.class
+                java.lang.Integer.class, java.lang.String.class, java.lang.Double.class, java.lang.String.class, java.lang.Integer.class
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -598,8 +632,11 @@ public class Main extends javax.swing.JFrame {
             }
         });
         jScrollPane5.setViewportView(jTable2);
+        if (jTable2.getColumnModel().getColumnCount() > 0) {
+            jTable2.getColumnModel().getColumn(0).setPreferredWidth(4);
+        }
 
-        jd_Reporteria.getContentPane().add(jScrollPane5, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 180, 820, 470));
+        jd_Reporteria.getContentPane().add(jScrollPane5, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 180, 790, 470));
 
         jButton12.setBackground(new java.awt.Color(0, 102, 102));
         jButton12.setFont(new java.awt.Font("Sylfaen", 1, 24)); // NOI18N
@@ -624,6 +661,7 @@ public class Main extends javax.swing.JFrame {
         jMenuItem6.setText("El delimitador ' | ' muestra el nuevo bloque en el archivo");
         jPopupMenu1.add(jMenuItem6);
 
+        jMenuItem3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/document-24.png"))); // NOI18N
         jMenuItem3.setText("Abrir");
         jMenuItem3.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -632,9 +670,11 @@ public class Main extends javax.swing.JFrame {
         });
         jPopupMenu2.add(jMenuItem3);
 
+        jMenuItem4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/docx_file_name_extension-24.png"))); // NOI18N
         jMenuItem4.setText("Convertir a doc");
         jPopupMenu2.add(jMenuItem4);
 
+        jMenuItem5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/68-24.png"))); // NOI18N
         jMenuItem5.setText("Permisos");
         jMenuItem5.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -836,6 +876,8 @@ public class Main extends javax.swing.JFrame {
         jLabel28.setText("");
         jLabel27.setText("");
         jTextArea1.setText("");
+        jTabbedPane1.setVisible(true);
+        jTextArea1.setEditable(true);
         jd_Editor.pack();
         jd_Editor.setModal(true);
         jd_Editor.setVisible(true);
@@ -894,10 +936,6 @@ public class Main extends javax.swing.JFrame {
         String font = (String) jComboBox1.getSelectedItem();
         FontStyle(font);
     }//GEN-LAST:event_jComboBox1ActionPerformed
-
-    private void jd_HomeWindowClosed(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_jd_HomeWindowClosed
-
-    }//GEN-LAST:event_jd_HomeWindowClosed
 
     private void jButton2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton2MouseClicked
         boolean pase = false;
@@ -971,7 +1009,6 @@ public class Main extends javax.swing.JFrame {
 
     private void jButton18MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton18MouseClicked
         boolean existente = false;
-
         if (jLabel28.getText() == "") {
             Guardar();
         }
@@ -991,15 +1028,15 @@ public class Main extends javax.swing.JFrame {
         Connection con = null;
         Statement st = null;
         ResultSet rs = null;
-        int idusuario =  (Integer.parseInt(persona[0]));
-        int idarchivo =  Integer.parseInt(jLabel19.getText());
+        int idusuario = (Integer.parseInt(persona[0]));
+        int idarchivo = Integer.parseInt(jLabel28.getText());
         try {
             con = (Connection) DriverManager.getConnection("jdbc:mysql://localhost/datab", "root", "qwaszx12");
             st = con.createStatement();
             rs = st.executeQuery("select * from permiso");
             while (rs.next()) {
                 if ((rs.getInt("usuario_idusuario") == idusuario)
-                    && ((rs.getInt("archivo_idarchivo") == idarchivo))) {
+                        && ((rs.getInt("archivo_idarchivo") == idarchivo))) {
                     existente = true;
                     System.out.println("ENTRO A CONDICION PERMISO EXISTENTE");
                 }
@@ -1007,13 +1044,13 @@ public class Main extends javax.swing.JFrame {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        if (existente){
+        if (existente) {
             try {
                 con = (Connection) DriverManager.getConnection("jdbc:mysql://localhost/datab", "root", "qwaszx12");
                 st = con.createStatement();
                 String query = "UPDATE permiso SET permiso = '" + permi
-                        + "' WHERE (usuario_idusuario= '" + idusuario +
-                        "' AND archivo_idarchivo= '"+idarchivo+"')";
+                        + "' WHERE (usuario_idusuario= '" + idusuario
+                        + "' AND archivo_idarchivo= '" + idarchivo + "')";
                 st.executeUpdate(query);
                 JOptionPane.showMessageDialog(this, "Se ha actualizado el permiso");
             } catch (Exception ex) {
@@ -1070,6 +1107,7 @@ public class Main extends javax.swing.JFrame {
             chooser.setCurrentDirectory(new File("C:\\Users\\Admin\\Editor-de-Texto-Multiusuario\\TextoMultiusuario\\src"));
             int retrival = chooser.showSaveDialog(null);
             if (retrival == JFileChooser.APPROVE_OPTION) {
+                //Document document = new Document(PageSize.A4.rotate(), 10,15,10,15);
                 Document document = new Document();
                 PdfWriter writer;
                 File file = new File(chooser.getSelectedFile() + ".pdf");
@@ -1085,15 +1123,30 @@ public class Main extends javax.swing.JFrame {
 
                 PdfContentByte cb = writer.getDirectContent();
 
-                PdfTemplate tp = cb.createTemplate(500, 500);
+                cb.beginText();
+
+                BaseFont bf = BaseFont.createFont(BaseFont.TIMES_ROMAN, BaseFont.CP1252, BaseFont.NOT_EMBEDDED);
+                cb.setFontAndSize(bf, 22);
+                //cb.showTextAligned(PdfContentByte.ALIGN_CENTER, "REPORTE DE ARCHIVOS EN LA BASE DE DATOS", 250, 700, 0);
+
+                cb.showTextAligned(PdfContentByte.ALIGN_CENTER, "Reporte de Archivos en la Base de Datos", 300, 750, 0);
+                cb.setFontAndSize(bf, 16);
+                cb.showTextAligned(PdfContentByte.ALIGN_LEFT, "Id----------------------------"
+                        + "Nombre--------------------"
+                        + "Tamaño-------------------"
+                        + "Fecha---------", 10, 710, 0);
+                cb.endText();
+
+                PdfTemplate tp = cb.createTemplate(560, 500);
                 Graphics2D g2;
 
-                g2 = tp.createGraphicsShapes(500, 500);
+                g2 = tp.createGraphicsShapes(560, 500);
+                        //.scaleToFit(400,240);
 
                 // g2 = tp.createGraphics(500, 500);
                 jTable2.print(g2);
                 g2.dispose();
-                cb.addTemplate(tp, 30, 300);
+                cb.addTemplate(tp, 10, 200);
 
                 // step 5: we close the document
                 document.close();
@@ -1105,33 +1158,6 @@ public class Main extends javax.swing.JFrame {
 
     }//GEN-LAST:event_jButton12MouseClicked
 
-    private void jd_ReporteriaWindowActivated(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_jd_ReporteriaWindowActivated
-        DefaultTableModel dtm = new DefaultTableModel(0, 0);
-        String header[] = new String[]{"ID", "ID PROPIETARIO", "NOMBRE", "TAMANO (Bytes)"};
-        dtm.setColumnIdentifiers(header);
-        jTable2.setModel(dtm);
-        try {
-            Connection con = (Connection) DriverManager.getConnection("jdbc:mysql://localhost/datab", "root", "qwaszx12");
-            Statement st = con.createStatement();
-            ResultSet rs = st.executeQuery("select * from archivo");
-            String nombre, contenido, fecha;
-            int id, iduser, size;
-            while (rs.next()) {
-                id = rs.getInt("idarchivo");
-                iduser = rs.getInt("usuario_idusuario");
-                nombre = rs.getString("nombre");
-                contenido = rs.getString("contenido");
-                fecha = rs.getString("fecha");
-                byte[] b = contenido.getBytes("UTF-8");
-                size = b.length;
-                System.out.println(id + " " + iduser + " " + nombre + " " + size);
-                dtm.addRow(new Object[]{id, iduser, nombre, size, fecha});
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }//GEN-LAST:event_jd_ReporteriaWindowActivated
-
     private void jButton3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton3MouseClicked
         jd_Reporteria.pack();
         jd_Reporteria.setVisible(true);
@@ -1142,12 +1168,20 @@ public class Main extends javax.swing.JFrame {
         ResultSet rs = null;
         Statement st = null;
         Connection con = null;
+        JList jlis = null;
+        if (numeroLista == 1) {
+            jlis = jList1;
+        } else if (numeroLista == 2) {
+            jlis = jl_lecturaArchvs;
+        } else {
+            jlis = jl_escrituraArchvs;
+        }
         try {
-            if (jList1.getSelectedIndex() != -1) {
+            if (jlis.getSelectedIndex() != -1) {
                 con = (Connection) DriverManager.getConnection("jdbc:mysql://localhost/datab", "root", "qwaszx12");
                 st = con.createStatement();
 
-                String[] persona = ((String) jList1.getSelectedValue()).split("-");
+                String[] persona = ((String) jlis.getSelectedValue()).split("-");
                 int idarchv = (Integer.parseInt(persona[0]));
                 String XMLA;
                 try {
@@ -1216,17 +1250,17 @@ public class Main extends javax.swing.JFrame {
         jl_escrituraArchvs.setModel(dtme);
         String q;
         try {
-
+            Connection conn = (Connection) DriverManager.getConnection("jdbc:mysql://localhost/datab", "root", "qwaszx12");
+            Statement stt = conn.createStatement();
             Connection con = (Connection) DriverManager.getConnection("jdbc:mysql://localhost/datab", "root", "qwaszx12");
             Statement st = con.createStatement();
             ResultSet rs = st.executeQuery("select * from permiso WHERE usuario_idusuario=" + Integer.parseInt(jLabel19.getText()));
-            int id1 = 1, idarch1 = 0;
+            ResultSet rss;
+            int id1, idarch1;
             while (rs.next()) {
                 id1 = rs.getInt("permiso");
                 idarch1 = rs.getInt("archivo_idarchivo");
-                Connection conn = (Connection) DriverManager.getConnection("jdbc:mysql://localhost/datab", "root", "qwaszx12");
-                Statement stt = conn.createStatement();
-                ResultSet rss = stt.executeQuery("select * from archivo WHERE idarchivo=" + idarch1);
+                rss = stt.executeQuery("select * from archivo WHERE idarchivo=" + idarch1);
                 while (rss.next()) {
                     q = rss.getInt("idarchivo") + "-" + rss.getString("nombre");
                     if (id1 == 1) {
@@ -1240,10 +1274,6 @@ public class Main extends javax.swing.JFrame {
             e.printStackTrace();
         }
     }//GEN-LAST:event_jd_HomeWindowActivated
-
-    private void jd_HomeWindowDeactivated(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_jd_HomeWindowDeactivated
-
-    }//GEN-LAST:event_jd_HomeWindowDeactivated
 
     private void jd_HomeWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_jd_HomeWindowClosing
         int id = Integer.parseInt(jLabel19.getText());
@@ -1262,11 +1292,11 @@ public class Main extends javax.swing.JFrame {
     }//GEN-LAST:event_jd_HomeWindowClosing
 
     private void jLabel30MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel30MouseEntered
-        //jPopupMenu2.show(this, evt.getX(), evt.getY());
+
     }//GEN-LAST:event_jLabel30MouseEntered
 
     private void jLabel30MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel30MouseExited
-        //jPopupMenu2.show(false);
+
     }//GEN-LAST:event_jLabel30MouseExited
 
     private void jd_BitacoraWindowActivated(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_jd_BitacoraWindowActivated
@@ -1284,11 +1314,11 @@ public class Main extends javax.swing.JFrame {
         Connection con = null;
         JList jlis = new JList();
         if (numeroLista == 1) {
-            jlis.setModel(jList1.getModel());
+            jlis = jList1;
         } else if (numeroLista == 2) {
-            jlis.setModel(jl_lecturaArchvs.getModel());
+            jlis = jl_lecturaArchvs;
         } else {
-            jlis.setModel(jl_escrituraArchvs.getModel());
+            jlis = jl_escrituraArchvs;
         }
         try {
             if (jlis.getSelectedIndex() != -1) {
@@ -1325,17 +1355,200 @@ public class Main extends javax.swing.JFrame {
 
     private void jl_lecturaArchvsMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jl_lecturaArchvsMouseReleased
         numeroLista = 2;
+        jTabbedPane1.setVisible(false);
+        jTextArea1.setEditable(false);
         if (evt.isPopupTrigger()) {
-            jPopupMenu2.show(jList1, evt.getX(), evt.getY());
+            jPopupMenu2.show(jl_lecturaArchvs, evt.getX(), evt.getY());
         }
     }//GEN-LAST:event_jl_lecturaArchvsMouseReleased
 
     private void jl_escrituraArchvsMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jl_escrituraArchvsMouseReleased
         numeroLista = 3;
+        jTabbedPane1.setVisible(true);
+        jTextArea1.setEditable(true);
         if (evt.isPopupTrigger()) {
-            jPopupMenu2.show(jList1, evt.getX(), evt.getY());
+            jPopupMenu2.show(jl_escrituraArchvs, evt.getX(), evt.getY());
         }
     }//GEN-LAST:event_jl_escrituraArchvsMouseReleased
+
+    private void jd_ReporteriaWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_jd_ReporteriaWindowOpened
+        DefaultTableModel dtm = new DefaultTableModel();
+        String[] ss = {"ID", "NOMBRE", "TAMANO", "FECHA", "OWNER"};
+
+        dtm.setColumnIdentifiers(ss);
+        jTable2.setModel(dtm);
+        TableRowSorter<TableModel> sorter = new TableRowSorter<TableModel>(jTable2.getModel());
+        jTable2.setRowSorter(sorter);
+        ArrayList<RowSorter.SortKey> sortKeys = new ArrayList<>();
+        sortKeys.add(new RowSorter.SortKey(0, SortOrder.ASCENDING));
+        sortKeys.add(new RowSorter.SortKey(3, SortOrder.ASCENDING));
+        sorter.setSortKeys(sortKeys);
+        try {
+            Connection con = (Connection) DriverManager.getConnection("jdbc:mysql://localhost/datab", "root", "qwaszx12");
+            Statement st = con.createStatement();
+            ResultSet rs = st.executeQuery("select * from archivo");
+            String nombre, contenido, fecha;
+            int id, iduser, size;
+            while (rs.next()) {
+                id = rs.getInt("idarchivo");
+                iduser = rs.getInt("usuario_idusuario");
+                nombre = rs.getString("nombre");
+                contenido = rs.getString("contenido");
+                fecha = rs.getString("fecha");
+                byte[] b = contenido.getBytes("UTF-8");
+                size = b.length;
+                dtm.addRow(new Object[]{id, nombre, size, fecha, iduser});
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }//GEN-LAST:event_jd_ReporteriaWindowOpened
+
+    private void jButton10MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton10MouseClicked
+        try {
+            FtpEnvio();
+        } catch (UnknownHostException ex) {
+            Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException ex) {
+            Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_jButton10MouseClicked
+
+    private void jTextArea1MouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTextArea1MouseReleased
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTextArea1MouseReleased
+
+    /**
+     * @param args the command line arguments
+     */
+    public static void main(String args[]) {
+        /* Set the Nimbus look and feel */
+        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
+        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
+         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
+         */
+        try {
+            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
+                if ("Nimbus".equals(info.getName())) {
+                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
+                    break;
+                }
+            }
+        } catch (ClassNotFoundException ex) {
+            java.util.logging.Logger.getLogger(Main.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (InstantiationException ex) {
+            java.util.logging.Logger.getLogger(Main.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (IllegalAccessException ex) {
+            java.util.logging.Logger.getLogger(Main.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
+            java.util.logging.Logger.getLogger(Main.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        }
+        //</editor-fold>
+
+        /* Create and display the form */
+        java.awt.EventQueue.invokeLater(new Runnable() {
+            public void run() {
+                new Main().setVisible(true);
+            }
+        });
+    }
+
+    // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton10;
+    private javax.swing.JButton jButton11;
+    private javax.swing.JButton jButton12;
+    private javax.swing.JButton jButton13;
+    private javax.swing.JButton jButton14;
+    private javax.swing.JButton jButton15;
+    private javax.swing.JButton jButton16;
+    private javax.swing.JButton jButton17;
+    private javax.swing.JButton jButton18;
+    private javax.swing.JButton jButton2;
+    private javax.swing.JButton jButton3;
+    private javax.swing.JButton jButton4;
+    private javax.swing.JButton jButton5;
+    private javax.swing.JButton jButton6;
+    private javax.swing.JButton jButton7;
+    private javax.swing.JButton jButton8;
+    private javax.swing.JButton jButton9;
+    private javax.swing.JComboBox jComboBox1;
+    private javax.swing.JComboBox jComboBox2;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel10;
+    private javax.swing.JLabel jLabel11;
+    private javax.swing.JLabel jLabel12;
+    private javax.swing.JLabel jLabel13;
+    private javax.swing.JLabel jLabel14;
+    private javax.swing.JLabel jLabel15;
+    private javax.swing.JLabel jLabel16;
+    private javax.swing.JLabel jLabel17;
+    private javax.swing.JLabel jLabel18;
+    private javax.swing.JLabel jLabel19;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel20;
+    private javax.swing.JLabel jLabel21;
+    private javax.swing.JLabel jLabel22;
+    private javax.swing.JLabel jLabel23;
+    private javax.swing.JLabel jLabel24;
+    private javax.swing.JLabel jLabel25;
+    private javax.swing.JLabel jLabel26;
+    private javax.swing.JLabel jLabel27;
+    private javax.swing.JLabel jLabel28;
+    private javax.swing.JLabel jLabel29;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel30;
+    private javax.swing.JLabel jLabel31;
+    private javax.swing.JLabel jLabel32;
+    private javax.swing.JLabel jLabel33;
+    private javax.swing.JLabel jLabel34;
+    private javax.swing.JLabel jLabel35;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
+    private javax.swing.JLabel jLabel9;
+    private javax.swing.JList jList1;
+    private javax.swing.JMenu jMenu1;
+    private javax.swing.JMenuBar jMenuBar1;
+    private javax.swing.JMenuItem jMenuItem1;
+    private javax.swing.JMenuItem jMenuItem2;
+    private javax.swing.JMenuItem jMenuItem3;
+    private javax.swing.JMenuItem jMenuItem4;
+    private javax.swing.JMenuItem jMenuItem5;
+    private javax.swing.JMenuItem jMenuItem6;
+    private javax.swing.JPanel jPanel2;
+    private javax.swing.JPanel jPanel3;
+    private javax.swing.JPasswordField jPasswordField1;
+    private javax.swing.JPasswordField jPasswordField2;
+    private javax.swing.JPopupMenu jPopupMenu1;
+    private javax.swing.JPopupMenu jPopupMenu2;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JScrollPane jScrollPane3;
+    private javax.swing.JScrollPane jScrollPane4;
+    private javax.swing.JScrollPane jScrollPane5;
+    private javax.swing.JScrollPane jScrollPane6;
+    private javax.swing.JTabbedPane jTabbedPane1;
+    private javax.swing.JTable jTable2;
+    private javax.swing.JTable jTable3;
+    private javax.swing.JTextArea jTextArea1;
+    private javax.swing.JTextField jTextField1;
+    private javax.swing.JTextField jTextField2;
+    private javax.swing.JTextField jTextField3;
+    private javax.swing.JTextField jTextField4;
+    private javax.swing.JTextField jTextField6;
+    private javax.swing.JToggleButton jToggleButton1;
+    private javax.swing.JToggleButton jToggleButton2;
+    private javax.swing.JDialog jd_Bitacora;
+    private javax.swing.JDialog jd_Editor;
+    private javax.swing.JDialog jd_Home;
+    private javax.swing.JDialog jd_Permisos;
+    private javax.swing.JDialog jd_Reporteria;
+    private javax.swing.JList jl_escrituraArchvs;
+    private javax.swing.JList jl_lecturaArchvs;
+    // End of variables declaration//GEN-END:variables
 
     public void Guardar() {
         boolean pase = false;
@@ -1443,6 +1656,94 @@ public class Main extends javax.swing.JFrame {
         }
     }
 
+    public void FtpEnvio() throws SocketException, UnknownHostException, IOException {
+        try {
+            String server = "ftp://ftp.webbpa.com";
+            String username = "UsuarioOA@webbpa.com";
+            String password = "Seccion25";
+
+            FTPClient ftpClient = new FTPClient();
+            ftpClient.connect(InetAddress.getByName(server));
+            ftpClient.login(username, password);
+
+            //Verificar conexión con el servidor.
+            int reply = ftpClient.getReplyCode();
+            System.out.println("Respuesta recibida de conexión FTP:" + reply);
+
+            if (FTPReply.isPositiveCompletion(reply)) {
+                System.out.println("Conectado Satisfactoriamente");
+            } else {
+                System.out.println("Imposible conectarse al servidor");
+            }
+
+            //Verificar si se cambia de direcotirio de trabajo
+            ftpClient.changeWorkingDirectory("/");//Cambiar directorio de trabajo
+            System.out.println("Se cambió satisfactoriamente el directorio");
+
+            //Activar que se envie cualquier tipo de archivo
+            ftpClient.setFileType(FTP.BINARY_FILE_TYPE);
+
+            BufferedInputStream buffIn = null;
+            buffIn = new BufferedInputStream(new FileInputStream(""));//Ruta del archivo para enviar
+            ftpClient.enterLocalPassiveMode();
+            ftpClient.storeFile("", buffIn);//Ruta completa de alojamiento en el FTP
+
+            buffIn.close(); //Cerrar envio de arcivos al FTP
+            ftpClient.logout(); //Cerrar sesión
+            ftpClient.disconnect();//Desconectarse del servidor
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            System.out.println("Algo malo sucedió");
+        }
+    }
+
+    public void FTPfunctionListar() {
+        String server = "ftp://ftp.webbpa.com";
+        String username = "UsuarioOA@webbpa.com";
+        String password = "Seccion25";
+
+        // Cliente de conexion a FTP
+        FTPClient ftp = new FTPClient();
+
+        int respuesta, i;
+        String[] lista;
+
+        try {
+            System.out.println("CONECTANDO AL SERVIDOR FTP");
+            // Conectando e identificandose con el servidos
+            ftp.connect(server);
+            ftp.login(username, password);
+            // Entrando a modo pasivo
+            ftp.enterLocalPassiveMode();
+
+            // Obteniendo respuesta del servidos
+            respuesta = ftp.getReplyCode();
+            System.out.println("RESPUESTA " + respuesta);
+            // Si la respuesta del servidor indica podemos pasar procedemos 
+            if (FTPReply.isPositiveCompletion(respuesta) == true) {
+                System.out.println("LISTANDO ARCHIVOS");
+                lista = ftp.listNames();
+
+                for (i = 0; i < lista.length; i++) {
+
+                    System.out.println(lista[i]);
+                }
+                // Si no avisamos
+            } else {
+                System.out.println("ERROR DE CONEXION");
+            }
+
+            // en ambos casos terminaos sesion
+            ftp.logout();
+            // Y nos desconectamos
+            ftp.disconnect();
+
+            // Esta excepcion se lanza en caso de algun error durante el proceso 
+        } catch (IOException e) {
+            System.out.println("ERROR DE CONEXION");
+        }
+    }
+
     public void DataBaseInit() {
         try {
             Connection con = (Connection) DriverManager.getConnection("jdbc:mysql://localhost/datab", "root", "qwaszx12");
@@ -1477,141 +1778,9 @@ public class Main extends javax.swing.JFrame {
         }
     }
 
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(Main.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(Main.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(Main.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(Main.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new Main().setVisible(true);
-            }
-        });
-    }
-
-    // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton11;
-    private javax.swing.JButton jButton12;
-    private javax.swing.JButton jButton13;
-    private javax.swing.JButton jButton14;
-    private javax.swing.JButton jButton15;
-    private javax.swing.JButton jButton16;
-    private javax.swing.JButton jButton17;
-    private javax.swing.JButton jButton18;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
-    private javax.swing.JButton jButton4;
-    private javax.swing.JButton jButton5;
-    private javax.swing.JButton jButton6;
-    private javax.swing.JButton jButton7;
-    private javax.swing.JButton jButton8;
-    private javax.swing.JButton jButton9;
-    private javax.swing.JComboBox jComboBox1;
-    private javax.swing.JComboBox jComboBox2;
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel10;
-    private javax.swing.JLabel jLabel11;
-    private javax.swing.JLabel jLabel12;
-    private javax.swing.JLabel jLabel13;
-    private javax.swing.JLabel jLabel14;
-    private javax.swing.JLabel jLabel15;
-    private javax.swing.JLabel jLabel16;
-    private javax.swing.JLabel jLabel17;
-    private javax.swing.JLabel jLabel18;
-    private javax.swing.JLabel jLabel19;
-    private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel20;
-    private javax.swing.JLabel jLabel21;
-    private javax.swing.JLabel jLabel22;
-    private javax.swing.JLabel jLabel23;
-    private javax.swing.JLabel jLabel24;
-    private javax.swing.JLabel jLabel25;
-    private javax.swing.JLabel jLabel26;
-    private javax.swing.JLabel jLabel27;
-    private javax.swing.JLabel jLabel28;
-    private javax.swing.JLabel jLabel29;
-    private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel30;
-    private javax.swing.JLabel jLabel31;
-    private javax.swing.JLabel jLabel32;
-    private javax.swing.JLabel jLabel33;
-    private javax.swing.JLabel jLabel34;
-    private javax.swing.JLabel jLabel35;
-    private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel5;
-    private javax.swing.JLabel jLabel6;
-    private javax.swing.JLabel jLabel7;
-    private javax.swing.JLabel jLabel8;
-    private javax.swing.JLabel jLabel9;
-    private javax.swing.JList jList1;
-    private javax.swing.JMenu jMenu1;
-    private javax.swing.JMenuBar jMenuBar1;
-    private javax.swing.JMenuItem jMenuItem1;
-    private javax.swing.JMenuItem jMenuItem2;
-    private javax.swing.JMenuItem jMenuItem3;
-    private javax.swing.JMenuItem jMenuItem4;
-    private javax.swing.JMenuItem jMenuItem5;
-    private javax.swing.JMenuItem jMenuItem6;
-    private javax.swing.JPanel jPanel2;
-    private javax.swing.JPanel jPanel3;
-    private javax.swing.JPasswordField jPasswordField1;
-    private javax.swing.JPasswordField jPasswordField2;
-    private javax.swing.JPopupMenu jPopupMenu1;
-    private javax.swing.JPopupMenu jPopupMenu2;
-    private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JScrollPane jScrollPane3;
-    private javax.swing.JScrollPane jScrollPane4;
-    private javax.swing.JScrollPane jScrollPane5;
-    private javax.swing.JScrollPane jScrollPane6;
-    private javax.swing.JTabbedPane jTabbedPane1;
-    private javax.swing.JTable jTable2;
-    private javax.swing.JTable jTable3;
-    private javax.swing.JTextArea jTextArea1;
-    private javax.swing.JTextField jTextField1;
-    private javax.swing.JTextField jTextField2;
-    private javax.swing.JTextField jTextField3;
-    private javax.swing.JTextField jTextField4;
-    private javax.swing.JTextField jTextField6;
-    private javax.swing.JToggleButton jToggleButton1;
-    private javax.swing.JToggleButton jToggleButton2;
-    private javax.swing.JDialog jd_Bitacora;
-    private javax.swing.JDialog jd_Editor;
-    private javax.swing.JDialog jd_Home;
-    private javax.swing.JDialog jd_Permisos;
-    private javax.swing.JDialog jd_Reporteria;
-    private javax.swing.JList jl_escrituraArchvs;
-    private javax.swing.JList jl_lecturaArchvs;
-    // End of variables declaration//GEN-END:variables
-
     ArrayList<Usuario> conectados;
     ArrayList<Bloque> bloques;
     UndoManager undo = new UndoManager();
     Usuario AdminUsuario;
     int numeroLista;
-
 }
