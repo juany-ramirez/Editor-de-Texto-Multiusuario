@@ -26,6 +26,7 @@ import java.awt.List;
 import java.io.BufferedInputStream;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import javax.swing.JFileChooser;
 import static javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER;
@@ -47,8 +48,13 @@ import java.util.logging.Logger;
 import org.apache.commons.net.ftp.FTP;
 import org.apache.commons.net.ftp.FTPClient;
 import org.apache.commons.net.ftp.FTPReply;
-//import org.apache.commons.net.ftp.FTPClient;
-//import org.apache.commons.net.ftp.FTPReply;
+import org.apache.poi.xwpf.usermodel.XWPFDocument;
+import org.apache.poi.xwpf.usermodel.XWPFParagraph;
+import org.apache.poi.xwpf.usermodel.XWPFRun;
+/*
+ import org.apache.poi.xwpf.usermodel.XWPFDocument;
+ import org.apache.poi.xwpf.usermodel.XWPFParagraph;
+ import org.apache.poi.xwpf.usermodel.XWPFRun;*/
 
 /**
  *
@@ -61,7 +67,6 @@ public class Main extends javax.swing.JFrame {
      */
     public Main() {
         initComponents();
-        conectados = new ArrayList<>();
         jTextArea1.getCaret().setSelectionVisible(true);
         jTextArea1.getDocument().addUndoableEditListener(
                 new UndoableEditListener() {
@@ -140,6 +145,8 @@ public class Main extends javax.swing.JFrame {
         jLabel24 = new javax.swing.JLabel();
         jPopupMenu1 = new javax.swing.JPopupMenu();
         jMenuItem6 = new javax.swing.JMenuItem();
+        jMenuItem7 = new javax.swing.JMenuItem();
+        jMenuItem8 = new javax.swing.JMenuItem();
         jPopupMenu2 = new javax.swing.JPopupMenu();
         jMenuItem3 = new javax.swing.JMenuItem();
         jMenuItem4 = new javax.swing.JMenuItem();
@@ -437,6 +444,11 @@ public class Main extends javax.swing.JFrame {
         jButton16.setForeground(new java.awt.Color(51, 51, 0));
         jButton16.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/docx_file_name_extension-64.png"))); // NOI18N
         jButton16.setText("Convertir");
+        jButton16.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jButton16MouseClicked(evt);
+            }
+        });
 
         jButton17.setBackground(new java.awt.Color(102, 102, 0));
         jButton17.setFont(new java.awt.Font("Sylfaen", 0, 18)); // NOI18N
@@ -658,8 +670,35 @@ public class Main extends javax.swing.JFrame {
         jLabel24.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/start_background_1080p__windows_8__by_zaktech90-d5xn0lk.jpg"))); // NOI18N
         jd_Reporteria.getContentPane().add(jLabel24, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1080, 700));
 
-        jMenuItem6.setText("El delimitador ' | ' muestra el nuevo bloque en el archivo");
+        jMenuItem6.setFont(new java.awt.Font("Rockwell", 0, 18)); // NOI18N
+        jMenuItem6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/copy_2-24.png"))); // NOI18N
+        jMenuItem6.setText("COPY");
+        jMenuItem6.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem6ActionPerformed(evt);
+            }
+        });
         jPopupMenu1.add(jMenuItem6);
+
+        jMenuItem7.setFont(new java.awt.Font("Rockwell", 0, 18)); // NOI18N
+        jMenuItem7.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/cut-24.png"))); // NOI18N
+        jMenuItem7.setText("CUT");
+        jMenuItem7.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem7ActionPerformed(evt);
+            }
+        });
+        jPopupMenu1.add(jMenuItem7);
+
+        jMenuItem8.setFont(new java.awt.Font("Rockwell", 0, 18)); // NOI18N
+        jMenuItem8.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/paste_2-24.png"))); // NOI18N
+        jMenuItem8.setText("PASTE");
+        jMenuItem8.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem8ActionPerformed(evt);
+            }
+        });
+        jPopupMenu1.add(jMenuItem8);
 
         jMenuItem3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/document-24.png"))); // NOI18N
         jMenuItem3.setText("Abrir");
@@ -836,6 +875,10 @@ public class Main extends javax.swing.JFrame {
         String user = jTextField1.getText();
         String pass = jPasswordField2.getText();
         boolean pase = false;
+        if(conectados == null){
+            conectados = new ArrayList<>();
+            System.out.println("SII");
+        }
         try {
             Connection con = (Connection) DriverManager.getConnection("jdbc:mysql://localhost/datab", "root", "qwaszx12");
             Statement st = con.createStatement();
@@ -849,11 +892,11 @@ public class Main extends javax.swing.JFrame {
                 usuario = rs.getString("username");
                 password = rs.getString("password");
                 correo = rs.getString("correo");
-                System.out.println(id + " " + nombre + " " + apellido + " " + usuario + " " + password + " " + correo);
                 if (user.equals(usuario) && pass.equals(password)) {
                     pase = true;
                     AdminUsuario = new Usuario(id, nombre, apellido, usuario, password, correo);
                     conectados.add(AdminUsuario);
+                    System.out.println(id + " " + nombre + "CONECTADO ");
                     jLabel19.setText(id + "");
                     jLabel20.setText(nombre + " " + apellido);
                     //con.close();
@@ -1128,13 +1171,13 @@ public class Main extends javax.swing.JFrame {
                 BaseFont bf = BaseFont.createFont(BaseFont.TIMES_ROMAN, BaseFont.CP1252, BaseFont.NOT_EMBEDDED);
                 cb.setFontAndSize(bf, 22);
                 //cb.showTextAligned(PdfContentByte.ALIGN_CENTER, "REPORTE DE ARCHIVOS EN LA BASE DE DATOS", 250, 700, 0);
-
+                DefaultTableModel mod = (DefaultTableModel) jTable2.getModel();
                 cb.showTextAligned(PdfContentByte.ALIGN_CENTER, "Reporte de Archivos en la Base de Datos", 300, 750, 0);
                 cb.setFontAndSize(bf, 16);
-                cb.showTextAligned(PdfContentByte.ALIGN_LEFT, "Id----------------------------"
-                        + "Nombre--------------------"
-                        + "Tamaño-------------------"
-                        + "Fecha---------", 10, 710, 0);
+                cb.showTextAligned(PdfContentByte.ALIGN_LEFT, mod.getColumnName(0) + "---------------------------"
+                        + mod.getColumnName(1) + "-----------------"
+                        + mod.getColumnName(2) + "-----------------"
+                        + mod.getColumnName(3) + "-----", 10, 710, 0);
                 cb.endText();
 
                 PdfTemplate tp = cb.createTemplate(560, 500);
@@ -1415,9 +1458,29 @@ public class Main extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton10MouseClicked
 
     private void jTextArea1MouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTextArea1MouseReleased
-        // TODO add your handling code here:
+        if (evt.isPopupTrigger()) {
+            jPopupMenu1.show(jTextArea1, evt.getX(), evt.getY());
+        }
     }//GEN-LAST:event_jTextArea1MouseReleased
 
+    private void jMenuItem6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem6ActionPerformed
+        jTextArea1.copy();
+    }//GEN-LAST:event_jMenuItem6ActionPerformed
+
+    private void jMenuItem7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem7ActionPerformed
+        jTextArea1.cut();
+    }//GEN-LAST:event_jMenuItem7ActionPerformed
+
+    private void jMenuItem8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem8ActionPerformed
+        jTextArea1.paste();
+    }//GEN-LAST:event_jMenuItem8ActionPerformed
+
+    private void jButton16MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton16MouseClicked
+       newWordDoc();
+    }//GEN-LAST:event_jButton16MouseClicked
+
+    
+    
     /**
      * @param args the command line arguments
      */
@@ -1518,6 +1581,8 @@ public class Main extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem4;
     private javax.swing.JMenuItem jMenuItem5;
     private javax.swing.JMenuItem jMenuItem6;
+    private javax.swing.JMenuItem jMenuItem7;
+    private javax.swing.JMenuItem jMenuItem8;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPasswordField jPasswordField1;
@@ -1692,6 +1757,7 @@ public class Main extends javax.swing.JFrame {
             ftpClient.logout(); //Cerrar sesión
             ftpClient.disconnect();//Desconectarse del servidor
         } catch (Exception e) {
+            e.printStackTrace();
             System.out.println(e.getMessage());
             System.out.println("Algo malo sucedió");
         }
@@ -1775,6 +1841,30 @@ public class Main extends javax.swing.JFrame {
             case "Verdana":
                 jTextArea1.setFont(new Font("Verdana", Font.PLAIN, jTextArea1.getFont().getSize()));
                 break;
+        }
+    }
+
+    public void newWordDoc() {
+        try {
+            JFileChooser chooser = new JFileChooser();
+            chooser.setCurrentDirectory(new File("C:\\Users\\Admin\\Editor-de-Texto-Multiusuario\\TextoMultiusuario\\src"));
+            int retrival = chooser.showSaveDialog(null);
+            if (retrival == JFileChooser.APPROVE_OPTION) {
+                XWPFDocument document = new XWPFDocument();
+                XWPFParagraph tmpParagraph = document.createParagraph();
+                XWPFRun tmpRun = tmpParagraph.createRun();
+                String[] content = jTextArea1.getText().split("\n");
+                for (int i = 0; i < content.length; i++) {
+                    tmpRun.setText(content[i]);
+                }
+                tmpRun.setFontSize(18);
+                FileOutputStream fos = new FileOutputStream(new File(chooser.getSelectedFile()+".doc"));
+                document.write(fos);
+                fos.close();
+                JOptionPane.showMessageDialog(this, "Se ha creado el Documento (.doc) exitosamente");
+            }
+        } catch (Exception ex) {
+            ex.printStackTrace();
         }
     }
 
