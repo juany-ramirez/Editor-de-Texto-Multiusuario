@@ -24,14 +24,19 @@ import com.itextpdf.text.pdf.PdfWriter;
 import java.awt.Graphics2D;
 import java.awt.List;
 import java.io.BufferedInputStream;
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.io.FileReader;
+import java.io.FileWriter;
 import javax.swing.JFileChooser;
 import static javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 import javax.swing.JList;
 import javax.swing.JTable;
@@ -40,6 +45,8 @@ import javax.swing.SortOrder;
 import javax.swing.table.TableModel;
 import javax.swing.table.TableRowSorter;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.net.InetAddress;
 import java.net.SocketException;
 import java.net.UnknownHostException;
@@ -51,10 +58,6 @@ import org.apache.commons.net.ftp.FTPReply;
 import org.apache.poi.xwpf.usermodel.XWPFDocument;
 import org.apache.poi.xwpf.usermodel.XWPFParagraph;
 import org.apache.poi.xwpf.usermodel.XWPFRun;
-/*
- import org.apache.poi.xwpf.usermodel.XWPFDocument;
- import org.apache.poi.xwpf.usermodel.XWPFParagraph;
- import org.apache.poi.xwpf.usermodel.XWPFRun;*/
 
 /**
  *
@@ -76,6 +79,7 @@ public class Main extends javax.swing.JFrame {
                 });
         bloques = new ArrayList<>();
         numeroLista = 0;
+        bitpath = "C:\\Users\\Admin\\Editor-de-Texto-Multiusuario\\TextoMultiusuario\\src\\bitacora.txt";
         //DataBaseInit();
     }
 
@@ -153,8 +157,11 @@ public class Main extends javax.swing.JFrame {
         jMenuItem5 = new javax.swing.JMenuItem();
         jd_Bitacora = new javax.swing.JDialog();
         jScrollPane6 = new javax.swing.JScrollPane();
-        jTable3 = new javax.swing.JTable();
+        jList3 = new javax.swing.JList();
+        jButton19 = new javax.swing.JButton();
         jLabel34 = new javax.swing.JLabel();
+        jLabel37 = new javax.swing.JLabel();
+        jLabel36 = new javax.swing.JLabel();
         jLabel35 = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
@@ -650,16 +657,17 @@ public class Main extends javax.swing.JFrame {
 
         jd_Reporteria.getContentPane().add(jScrollPane5, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 180, 790, 470));
 
-        jButton12.setBackground(new java.awt.Color(0, 102, 102));
-        jButton12.setFont(new java.awt.Font("Sylfaen", 1, 24)); // NOI18N
+        jButton12.setBackground(new java.awt.Color(0, 0, 51));
+        jButton12.setFont(new java.awt.Font("Stencil", 1, 24)); // NOI18N
         jButton12.setForeground(new java.awt.Color(204, 204, 204));
-        jButton12.setText("GENERAR PDF");
+        jButton12.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/pdf_file_name_extension-64.png"))); // NOI18N
+        jButton12.setText("Generar");
         jButton12.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 jButton12MouseClicked(evt);
             }
         });
-        jd_Reporteria.getContentPane().add(jButton12, new org.netbeans.lib.awtextra.AbsoluteConstraints(860, 340, 210, 130));
+        jd_Reporteria.getContentPane().add(jButton12, new org.netbeans.lib.awtextra.AbsoluteConstraints(850, 340, 220, 130));
 
         jLabel29.setFont(new java.awt.Font("Sylfaen", 1, 80)); // NOI18N
         jLabel29.setForeground(new java.awt.Color(0, 104, 153));
@@ -700,6 +708,7 @@ public class Main extends javax.swing.JFrame {
         });
         jPopupMenu1.add(jMenuItem8);
 
+        jMenuItem3.setFont(new java.awt.Font("Rockwell", 0, 18)); // NOI18N
         jMenuItem3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/document-24.png"))); // NOI18N
         jMenuItem3.setText("Abrir");
         jMenuItem3.addActionListener(new java.awt.event.ActionListener() {
@@ -709,10 +718,12 @@ public class Main extends javax.swing.JFrame {
         });
         jPopupMenu2.add(jMenuItem3);
 
+        jMenuItem4.setFont(new java.awt.Font("Rockwell", 0, 18)); // NOI18N
         jMenuItem4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/docx_file_name_extension-24.png"))); // NOI18N
         jMenuItem4.setText("Convertir a doc");
         jPopupMenu2.add(jMenuItem4);
 
+        jMenuItem5.setFont(new java.awt.Font("Rockwell", 0, 18)); // NOI18N
         jMenuItem5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/68-24.png"))); // NOI18N
         jMenuItem5.setText("Permisos");
         jMenuItem5.addActionListener(new java.awt.event.ActionListener() {
@@ -729,29 +740,27 @@ public class Main extends javax.swing.JFrame {
         });
         jd_Bitacora.getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jTable3.setBackground(new java.awt.Color(102, 102, 102));
-        jTable3.setFont(new java.awt.Font("Sitka Subheading", 0, 18)); // NOI18N
-        jTable3.setForeground(new java.awt.Color(204, 204, 204));
-        jTable3.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {"Usuario conectado", "10:10 p.m."},
-                {"Segundo usuario conectado", "10:30 p.m."}
-            },
-            new String [] {
-                "ACCIÓN", "HORA"
-            }
-        ) {
-            Class[] types = new Class [] {
-                java.lang.String.class, java.lang.String.class
-            };
-
-            public Class getColumnClass(int columnIndex) {
-                return types [columnIndex];
+        jList3.setFont(new java.awt.Font("Tw Cen MT Condensed", 0, 24)); // NOI18N
+        jList3.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseReleased(java.awt.event.MouseEvent evt) {
+                jList3MouseReleased(evt);
             }
         });
-        jScrollPane6.setViewportView(jTable3);
+        jScrollPane6.setViewportView(jList3);
 
-        jd_Bitacora.getContentPane().add(jScrollPane6, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 210, 980, 440));
+        jd_Bitacora.getContentPane().add(jScrollPane6, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 260, 850, 400));
+
+        jButton19.setBackground(new java.awt.Color(0, 0, 0));
+        jButton19.setFont(new java.awt.Font("Stencil", 1, 24)); // NOI18N
+        jButton19.setForeground(new java.awt.Color(204, 204, 204));
+        jButton19.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/History_expired-64.png"))); // NOI18N
+        jButton19.setText("CLEAR");
+        jButton19.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jButton19MouseClicked(evt);
+            }
+        });
+        jd_Bitacora.getContentPane().add(jButton19, new org.netbeans.lib.awtextra.AbsoluteConstraints(940, 370, 220, 110));
 
         jLabel34.setFont(new java.awt.Font("SimSun", 1, 90)); // NOI18N
         jLabel34.setForeground(new java.awt.Color(178, 178, 0));
@@ -759,9 +768,19 @@ public class Main extends javax.swing.JFrame {
         jLabel34.setText(" B I T Á C O R A");
         jd_Bitacora.getContentPane().add(jLabel34, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 30, 990, 160));
 
+        jLabel37.setFont(new java.awt.Font("Sylfaen", 0, 24)); // NOI18N
+        jLabel37.setForeground(new java.awt.Color(204, 204, 0));
+        jLabel37.setText("ACCIÓN");
+        jd_Bitacora.getContentPane().add(jLabel37, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 230, -1, -1));
+
+        jLabel36.setFont(new java.awt.Font("Sylfaen", 0, 24)); // NOI18N
+        jLabel36.setForeground(new java.awt.Color(204, 204, 0));
+        jLabel36.setText("HORA");
+        jd_Bitacora.getContentPane().add(jLabel36, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 230, -1, -1));
+
         jLabel35.setBackground(new java.awt.Color(153, 153, 153));
         jLabel35.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/kb4ds6lmyquh3cbp.jpg"))); // NOI18N
-        jd_Bitacora.getContentPane().add(jLabel35, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1080, 690));
+        jd_Bitacora.getContentPane().add(jLabel35, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1190, 690));
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -875,12 +894,8 @@ public class Main extends javax.swing.JFrame {
         String user = jTextField1.getText();
         String pass = jPasswordField2.getText();
         boolean pase = false;
-        if(conectados == null){
-            conectados = new ArrayList<>();
-            System.out.println("SII");
-        }
         try {
-            Connection con = (Connection) DriverManager.getConnection("jdbc:mysql://localhost/datab", "root", "qwaszx12");
+            Connection con = (Connection) DriverManager.getConnection("jdbc:mysql://localhost/datab?autoReconnect=true&useSSL=false", "root", "qwaszx12");
             Statement st = con.createStatement();
             ResultSet rs = st.executeQuery("select * from usuario");
             String usuario, password, nombre, apellido, correo;
@@ -895,8 +910,7 @@ public class Main extends javax.swing.JFrame {
                 if (user.equals(usuario) && pass.equals(password)) {
                     pase = true;
                     AdminUsuario = new Usuario(id, nombre, apellido, usuario, password, correo);
-                    conectados.add(AdminUsuario);
-                    System.out.println(id + " " + nombre + "CONECTADO ");
+                    bitacora(" - " + AdminUsuario.nombre + " " + AdminUsuario.apellido + " ha iniciado sesión");
                     jLabel19.setText(id + "");
                     jLabel20.setText(nombre + " " + apellido);
                     //con.close();
@@ -921,8 +935,8 @@ public class Main extends javax.swing.JFrame {
         jTextArea1.setText("");
         jTabbedPane1.setVisible(true);
         jTextArea1.setEditable(true);
+
         jd_Editor.pack();
-        jd_Editor.setModal(true);
         jd_Editor.setVisible(true);
     }//GEN-LAST:event_jButton4MouseClicked
 
@@ -984,19 +998,18 @@ public class Main extends javax.swing.JFrame {
         boolean pase = false;
         int usuarios = 0;
         try {
-            Connection con = (Connection) DriverManager.getConnection("jdbc:mysql://localhost/datab", "root", "qwaszx12");
+            Connection con = (Connection) DriverManager.getConnection("jdbc:mysql://localhost/datab?autoReconnect=true&useSSL=false", "root", "qwaszx12");
             Statement st = con.createStatement();
             ResultSet rs = st.executeQuery("select * from usuario");
             while (rs.next()) {
                 usuarios++;
-                System.out.println(usuarios);
             }
             usuarios++;
         } catch (Exception e) {
             e.printStackTrace();
         }
         try {
-            Connection con = (Connection) DriverManager.getConnection("jdbc:mysql://localhost/datab", "root", "qwaszx12");
+            Connection con = (Connection) DriverManager.getConnection("jdbc:mysql://localhost/datab?autoReconnect=true&useSSL=false", "root", "qwaszx12");
             Statement st = con.createStatement();
             String usuario, password, nombre, apellido, correo;
             nombre = jTextField4.getText();
@@ -1007,7 +1020,6 @@ public class Main extends javax.swing.JFrame {
             String Query = "insert into usuario "
                     + "(idusuario, nombre, apellido, username, password, correo) "
                     + "values ('" + (usuarios) + "', " + " '" + nombre + "', '" + apellido + "', '" + usuario + "', '" + password + "', '" + correo + "')";
-            System.out.println(Query);
             st.executeUpdate(Query);
             pase = true;
         } catch (Exception e) {
@@ -1028,12 +1040,11 @@ public class Main extends javax.swing.JFrame {
     private void jd_PermisosWindowActivated(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_jd_PermisosWindowActivated
         try {
             DefaultComboBoxModel modelo = new DefaultComboBoxModel();
-            Connection con = (Connection) DriverManager.getConnection("jdbc:mysql://localhost/datab", "root", "qwaszx12");
+            Connection con = (Connection) DriverManager.getConnection("jdbc:mysql://localhost/datab?autoReconnect=true&useSSL=false", "root", "qwaszx12");
             Statement st = con.createStatement();
             ResultSet rs = st.executeQuery("select * from usuario");
             while (rs.next()) {
                 String q = rs.getInt("idusuario") + "-" + rs.getString("nombre") + " " + rs.getString("apellido");
-                System.out.println(q);
                 if (rs.getInt("idusuario") != Integer.parseInt(jLabel19.getText())) {
                     modelo.addElement(q);
                 }
@@ -1074,14 +1085,13 @@ public class Main extends javax.swing.JFrame {
         int idusuario = (Integer.parseInt(persona[0]));
         int idarchivo = Integer.parseInt(jLabel28.getText());
         try {
-            con = (Connection) DriverManager.getConnection("jdbc:mysql://localhost/datab", "root", "qwaszx12");
+            con = (Connection) DriverManager.getConnection("jdbc:mysql://localhost/datab?autoReconnect=true&useSSL=false", "root", "qwaszx12");
             st = con.createStatement();
             rs = st.executeQuery("select * from permiso");
             while (rs.next()) {
                 if ((rs.getInt("usuario_idusuario") == idusuario)
                         && ((rs.getInt("archivo_idarchivo") == idarchivo))) {
                     existente = true;
-                    System.out.println("ENTRO A CONDICION PERMISO EXISTENTE");
                 }
             }
         } catch (Exception e) {
@@ -1089,31 +1099,32 @@ public class Main extends javax.swing.JFrame {
         }
         if (existente) {
             try {
-                con = (Connection) DriverManager.getConnection("jdbc:mysql://localhost/datab", "root", "qwaszx12");
+                con = (Connection) DriverManager.getConnection("jdbc:mysql://localhost/datab?autoReconnect=true&useSSL=false", "root", "qwaszx12");
                 st = con.createStatement();
                 String query = "UPDATE permiso SET permiso = '" + permi
                         + "' WHERE (usuario_idusuario= '" + idusuario
                         + "' AND archivo_idarchivo= '" + idarchivo + "')";
                 st.executeUpdate(query);
                 JOptionPane.showMessageDialog(this, "Se ha actualizado el permiso");
+                bitacora(" - " + AdminUsuario.nombre + " " + AdminUsuario.apellido + " ha actualizado un permiso");
             } catch (Exception ex) {
                 ex.printStackTrace();
                 JOptionPane.showMessageDialog(this, "Error en almacenamiento");
             }
         } else {
             try {
-                con = (Connection) DriverManager.getConnection("jdbc:mysql://localhost/datab", "root", "qwaszx12");
+                con = (Connection) DriverManager.getConnection("jdbc:mysql://localhost/datab?autoReconnect=true&useSSL=false", "root", "qwaszx12");
                 st = con.createStatement();
 
                 if (escogido) {
                     String Query = "insert into permiso "
                             + "(permiso, usuario_idusuario, archivo_idarchivo)"
                             + "values ('" + permi + "', '" + idusuario + "', '" + idarchivo + "')";
-                    System.out.println(Query);
                     st.executeUpdate(Query);
                 } else {
                     JOptionPane.showMessageDialog(this, "Error, seleccione una opcion");
                 }
+                bitacora( " - " + AdminUsuario.nombre + " " + AdminUsuario.apellido + " ha creado un nuevo permiso");
                 JOptionPane.showMessageDialog(this, "Se ha creado el permiso");
             } catch (Exception e) {
                 e.printStackTrace();
@@ -1193,6 +1204,7 @@ public class Main extends javax.swing.JFrame {
 
                 // step 5: we close the document
                 document.close();
+                bitacora(" - " + AdminUsuario.nombre + " " + AdminUsuario.apellido + " ha generado un nuevo reporte");
             }
 
         } catch (Exception e) {
@@ -1213,15 +1225,18 @@ public class Main extends javax.swing.JFrame {
         Connection con = null;
         JList jlis = null;
         if (numeroLista == 1) {
+            jTabbedPane1.setVisible(true);
             jlis = jList1;
         } else if (numeroLista == 2) {
+            jTabbedPane1.setVisible(false);
             jlis = jl_lecturaArchvs;
         } else {
+            jTabbedPane1.setVisible(true);
             jlis = jl_escrituraArchvs;
         }
         try {
             if (jlis.getSelectedIndex() != -1) {
-                con = (Connection) DriverManager.getConnection("jdbc:mysql://localhost/datab", "root", "qwaszx12");
+                con = (Connection) DriverManager.getConnection("jdbc:mysql://localhost/datab?autoReconnect=true&useSSL=false", "root", "qwaszx12");
                 st = con.createStatement();
 
                 String[] persona = ((String) jlis.getSelectedValue()).split("-");
@@ -1237,7 +1252,6 @@ public class Main extends javax.swing.JFrame {
                 }
                 Archivo arch = new Archivo();
                 arch = arch.DeserielizarXml(XMLA);
-                System.out.println(arch.ID);
                 jLabel28.setText(arch.ID + "");
                 jLabel27.setText(arch.Nombre);
                 jTextArea1.setText("");
@@ -1250,7 +1264,6 @@ public class Main extends javax.swing.JFrame {
                 jTextArea1.setFont(new Font(jTextArea1.getFont().getFontName(), Font.PLAIN, Integer.parseInt(form[0])));
                 FontStyle(form[1]);
                 jd_Editor.pack();
-                jd_Editor.setModal(true);
                 jd_Editor.setVisible(true);
             } else {
                 JOptionPane.showMessageDialog(this, "Error!\n Seleccionar archivo");
@@ -1272,15 +1285,12 @@ public class Main extends javax.swing.JFrame {
         DefaultListModel dtm = new DefaultListModel();
         jList1.setModel(dtm);
         try {
-            Connection con = (Connection) DriverManager.getConnection("jdbc:mysql://localhost/datab", "root", "qwaszx12");
+            Connection con = (Connection) DriverManager.getConnection("jdbc:mysql://localhost/datab?autoReconnect=true&useSSL=false", "root", "qwaszx12");
             Statement st = con.createStatement();
             ResultSet rs = st.executeQuery("select * from archivo WHERE usuario_idusuario=" + Integer.parseInt(jLabel19.getText()));
-            String nombre, contenido, formato, directorio;
-            int id, iduser;
             String q;
             while (rs.next()) {
                 q = rs.getInt("idarchivo") + "-" + rs.getString("nombre");
-                System.out.println(q);
                 dtm.addElement(q);
             }
         } catch (Exception e) {
@@ -1293,9 +1303,9 @@ public class Main extends javax.swing.JFrame {
         jl_escrituraArchvs.setModel(dtme);
         String q;
         try {
-            Connection conn = (Connection) DriverManager.getConnection("jdbc:mysql://localhost/datab", "root", "qwaszx12");
+            Connection conn = (Connection) DriverManager.getConnection("jdbc:mysql://localhost/datab?autoReconnect=true&useSSL=false", "root", "qwaszx12");
             Statement stt = conn.createStatement();
-            Connection con = (Connection) DriverManager.getConnection("jdbc:mysql://localhost/datab", "root", "qwaszx12");
+            Connection con = (Connection) DriverManager.getConnection("jdbc:mysql://localhost/datab?autoReconnect=true&useSSL=false", "root", "qwaszx12");
             Statement st = con.createStatement();
             ResultSet rs = st.executeQuery("select * from permiso WHERE usuario_idusuario=" + Integer.parseInt(jLabel19.getText()));
             ResultSet rss;
@@ -1321,15 +1331,7 @@ public class Main extends javax.swing.JFrame {
     private void jd_HomeWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_jd_HomeWindowClosing
         int id = Integer.parseInt(jLabel19.getText());
         int num = 0;
-        for (int i = 0; i < conectados.size(); i++) {
-            System.out.println(((Usuario) conectados.get(i)).getId() + " = " + id);
-            if (((Usuario) conectados.get(i)).getId() == id) {
-                JOptionPane.showMessageDialog(this, ((Usuario) conectados.get(i)).nombre + " ha cerrado sesion");
-                conectados.remove(i);
-                num = i;
-            }
-        }
-        //conectados.remove(num);
+        bitacora(" - " + AdminUsuario.nombre + " " + AdminUsuario.apellido + " ha cerrado sesión");
         this.pack();
         this.setVisible(true);
     }//GEN-LAST:event_jd_HomeWindowClosing
@@ -1343,7 +1345,20 @@ public class Main extends javax.swing.JFrame {
     }//GEN-LAST:event_jLabel30MouseExited
 
     private void jd_BitacoraWindowActivated(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_jd_BitacoraWindowActivated
-        // TODO add your handling code here:
+        try {
+            FileReader reader = new FileReader(bitpath);
+            BufferedReader bufferedReader = new BufferedReader(reader);
+            String line;
+            DefaultListModel dtm = new DefaultListModel();
+            jList3.setModel(dtm);
+            while ((line = bufferedReader.readLine()) != null) {
+                dtm.addElement(line);
+            }
+            reader.close();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }//GEN-LAST:event_jd_BitacoraWindowActivated
 
     private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
@@ -1365,7 +1380,7 @@ public class Main extends javax.swing.JFrame {
         }
         try {
             if (jlis.getSelectedIndex() != -1) {
-                con = (Connection) DriverManager.getConnection("jdbc:mysql://localhost/datab", "root", "qwaszx12");
+                con = (Connection) DriverManager.getConnection("jdbc:mysql://localhost/datab?autoReconnect=true&useSSL=false", "root", "qwaszx12");
                 st = con.createStatement();
                 String[] persona = ((String) jlis.getSelectedValue()).split("-");
                 int idarchv = (Integer.parseInt(persona[0]));
@@ -1427,7 +1442,7 @@ public class Main extends javax.swing.JFrame {
         sortKeys.add(new RowSorter.SortKey(3, SortOrder.ASCENDING));
         sorter.setSortKeys(sortKeys);
         try {
-            Connection con = (Connection) DriverManager.getConnection("jdbc:mysql://localhost/datab", "root", "qwaszx12");
+            Connection con = (Connection) DriverManager.getConnection("jdbc:mysql://localhost/datab?autoReconnect=true&useSSL=false", "root", "qwaszx12");
             Statement st = con.createStatement();
             ResultSet rs = st.executeQuery("select * from archivo");
             String nombre, contenido, fecha;
@@ -1449,12 +1464,11 @@ public class Main extends javax.swing.JFrame {
 
     private void jButton10MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton10MouseClicked
         try {
-            FtpEnvio();
-        } catch (UnknownHostException ex) {
-            Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (IOException ex) {
-            Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
-        }
+            ftpEnv();
+            bitacora(" - " + AdminUsuario.nombre + " " + AdminUsuario.apellido + " ha enviado por FTP");
+        } catch (Exception ex) {
+           ex.printStackTrace();
+        } 
     }//GEN-LAST:event_jButton10MouseClicked
 
     private void jTextArea1MouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTextArea1MouseReleased
@@ -1476,14 +1490,52 @@ public class Main extends javax.swing.JFrame {
     }//GEN-LAST:event_jMenuItem8ActionPerformed
 
     private void jButton16MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton16MouseClicked
-       newWordDoc();
+        bitacora(" - " + AdminUsuario.nombre + " " + AdminUsuario.apellido
+                    + " ha exportado " + jLabel27.getText() + " como documento");
+        newWordDoc();
     }//GEN-LAST:event_jButton16MouseClicked
 
-    
-    
-    /**
-     * @param args the command line arguments
-     */
+    private void jList3MouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jList3MouseReleased
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jList3MouseReleased
+
+    private void jButton19MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton19MouseClicked
+        try {
+            Calendar cal = Calendar.getInstance();
+            SimpleDateFormat sdf = new SimpleDateFormat("HH:mm:ss");
+            File file = new File(bitpath);
+            //file.mkdirs(); //!wrong  
+            file.getParentFile().mkdirs();//!correct
+            if (!file.exists()) {
+                file.createNewFile();
+            }
+            FileWriter writer = new FileWriter(file.getPath(), false);
+            BufferedWriter bufferedWriter = new BufferedWriter(writer);
+            bufferedWriter.newLine();
+            bufferedWriter.write("");
+            bufferedWriter.newLine();
+
+            bufferedWriter.close();
+
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+        try {
+            FileReader reader = new FileReader(bitpath);
+            BufferedReader bufferedReader = new BufferedReader(reader);
+            String line;
+            DefaultListModel dtm = new DefaultListModel();
+            jList3.setModel(dtm);
+            while ((line = bufferedReader.readLine()) != null) {
+                dtm.addElement(line);
+            }
+            reader.close();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }//GEN-LAST:event_jButton19MouseClicked
+
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
@@ -1495,16 +1547,21 @@ public class Main extends javax.swing.JFrame {
                 if ("Nimbus".equals(info.getName())) {
                     javax.swing.UIManager.setLookAndFeel(info.getClassName());
                     break;
+
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(Main.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Main.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(Main.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Main.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(Main.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Main.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(Main.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Main.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
 
@@ -1527,6 +1584,7 @@ public class Main extends javax.swing.JFrame {
     private javax.swing.JButton jButton16;
     private javax.swing.JButton jButton17;
     private javax.swing.JButton jButton18;
+    private javax.swing.JButton jButton19;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
@@ -1566,6 +1624,8 @@ public class Main extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel33;
     private javax.swing.JLabel jLabel34;
     private javax.swing.JLabel jLabel35;
+    private javax.swing.JLabel jLabel36;
+    private javax.swing.JLabel jLabel37;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
@@ -1573,6 +1633,7 @@ public class Main extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JList jList1;
+    private javax.swing.JList jList3;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenuItem jMenuItem1;
@@ -1597,7 +1658,6 @@ public class Main extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane6;
     private javax.swing.JTabbedPane jTabbedPane1;
     private javax.swing.JTable jTable2;
-    private javax.swing.JTable jTable3;
     private javax.swing.JTextArea jTextArea1;
     private javax.swing.JTextField jTextField1;
     private javax.swing.JTextField jTextField2;
@@ -1622,7 +1682,7 @@ public class Main extends javax.swing.JFrame {
         Statement st = null;
         Connection con = null;
         try {
-            con = (Connection) DriverManager.getConnection("jdbc:mysql://localhost/datab", "root", "qwaszx12");
+            con = (Connection) DriverManager.getConnection("jdbc:mysql://localhost/datab?autoReconnect=true&useSSL=false", "root", "qwaszx12");
             st = con.createStatement();
             int permi = 1;
             String nombre_archivo = null;
@@ -1670,6 +1730,8 @@ public class Main extends javax.swing.JFrame {
                 st.executeUpdate(Query);
                 jLabel28.setText(idarchv + "");
                 jLabel27.setText(nombre_archivo);
+                bitacora(" - " + AdminUsuario.nombre + " " + AdminUsuario.apellido + " ha creado un nuevo archivo (" + jLabel27.getText() + ")");
+                
             } else {
                 String idarchv = jLabel28.getText();
                 String XMLA;
@@ -1694,6 +1756,8 @@ public class Main extends javax.swing.JFrame {
                 String query = "UPDATE archivo SET contenido = '" + (nuevo.SerielizarXml(nuevo))
                         + "', formato = '" + forma + "' WHERE idarchivo= " + idarchv + "";
                 st.executeUpdate(query);
+                bitacora(" - " + AdminUsuario.nombre + " " + AdminUsuario.apellido + " ha almacenado cambios en " + jLabel27.getText());
+                
             }
 
             pase = true;
@@ -1726,28 +1790,22 @@ public class Main extends javax.swing.JFrame {
             String server = "ftp://ftp.webbpa.com";
             String username = "UsuarioOA@webbpa.com";
             String password = "Seccion25";
-
             FTPClient ftpClient = new FTPClient();
             ftpClient.connect(InetAddress.getByName(server));
             ftpClient.login(username, password);
-
             //Verificar conexión con el servidor.
             int reply = ftpClient.getReplyCode();
             System.out.println("Respuesta recibida de conexión FTP:" + reply);
-
             if (FTPReply.isPositiveCompletion(reply)) {
                 System.out.println("Conectado Satisfactoriamente");
             } else {
                 System.out.println("Imposible conectarse al servidor");
             }
-
             //Verificar si se cambia de direcotirio de trabajo
             ftpClient.changeWorkingDirectory("/");//Cambiar directorio de trabajo
             System.out.println("Se cambió satisfactoriamente el directorio");
-
             //Activar que se envie cualquier tipo de archivo
             ftpClient.setFileType(FTP.BINARY_FILE_TYPE);
-
             BufferedInputStream buffIn = null;
             buffIn = new BufferedInputStream(new FileInputStream(""));//Ruta del archivo para enviar
             ftpClient.enterLocalPassiveMode();
@@ -1767,8 +1825,7 @@ public class Main extends javax.swing.JFrame {
         String server = "ftp://ftp.webbpa.com";
         String username = "UsuarioOA@webbpa.com";
         String password = "Seccion25";
-
-        // Cliente de conexion a FTP
+        
         FTPClient ftp = new FTPClient();
 
         int respuesta, i;
@@ -1812,7 +1869,7 @@ public class Main extends javax.swing.JFrame {
 
     public void DataBaseInit() {
         try {
-            Connection con = (Connection) DriverManager.getConnection("jdbc:mysql://localhost/datab", "root", "qwaszx12");
+            Connection con = (Connection) DriverManager.getConnection("jdbc:mysql://localhost/datab?autoReconnect=true&useSSL=false", "root", "qwaszx12");
             Statement st = con.createStatement();
             ResultSet rs = st.executeQuery("select * from usuario");
             while (rs.next()) {
@@ -1853,12 +1910,13 @@ public class Main extends javax.swing.JFrame {
                 XWPFDocument document = new XWPFDocument();
                 XWPFParagraph tmpParagraph = document.createParagraph();
                 XWPFRun tmpRun = tmpParagraph.createRun();
+                int fs = jTextArea1.getFont().getSize();
+                FileOutputStream fos = new FileOutputStream(new File(chooser.getSelectedFile() + ".doc"));
                 String[] content = jTextArea1.getText().split("\n");
                 for (int i = 0; i < content.length; i++) {
                     tmpRun.setText(content[i]);
+                    tmpRun.setFontSize(fs);
                 }
-                tmpRun.setFontSize(18);
-                FileOutputStream fos = new FileOutputStream(new File(chooser.getSelectedFile()+".doc"));
                 document.write(fos);
                 fos.close();
                 JOptionPane.showMessageDialog(this, "Se ha creado el Documento (.doc) exitosamente");
@@ -1867,10 +1925,91 @@ public class Main extends javax.swing.JFrame {
             ex.printStackTrace();
         }
     }
-
-    ArrayList<Usuario> conectados;
+    String bitpath;
     ArrayList<Bloque> bloques;
     UndoManager undo = new UndoManager();
     Usuario AdminUsuario;
     int numeroLista;
+
+    private void bitacora(String mensaje) {
+        try {
+            Date todaysDate = new Date();
+            DateFormat df = new SimpleDateFormat("dd/MM/yyyy");
+            String testDateString = df.format(todaysDate);
+            Calendar cal = Calendar.getInstance();
+            SimpleDateFormat sdf = new SimpleDateFormat("hh:mm a");
+            File file = new File(bitpath);
+            //file.mkdirs(); //!wrong  
+            file.getParentFile().mkdirs();//!correct
+            if (!file.exists()) {
+                file.createNewFile();
+            }
+            FileWriter writer = new FileWriter(file.getPath(), true);
+            BufferedWriter bufferedWriter = new BufferedWriter(writer);
+            bufferedWriter.newLine();
+            bufferedWriter.write(testDateString+ " ("+sdf.format(cal.getTime())+") " + mensaje);
+            bufferedWriter.newLine();
+
+            bufferedWriter.close();
+
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+    }
+    
+    public void ftpEnv(){
+        int port = 21;
+        String server = "ftp.webbpa.com";
+        String user = "UsuarioOA@webbpa.com";
+        String pass = "Seccion25";
+        FTPClient ftpClient = new FTPClient();
+        try {
+            ftpClient.connect(server, port);
+            ftpClient.login(user, pass);
+            ftpClient.enterLocalPassiveMode();
+ 
+            ftpClient.setFileType(FTP.BINARY_FILE_TYPE);
+ 
+            // APPROACH #1: uploads first file using an InputStream
+            File file = new File("C:\\Users\\Admin\\Editor-de-Texto-Multiusuario\\TextoMultiusuario\\src\\"+jLabel27.getText()+".txt");
+            //file.mkdirs(); //!wrong  
+            file.getParentFile().mkdirs();//!correct
+            if (!file.exists()) {
+                file.createNewFile();
+            }
+            FileWriter writer = new FileWriter(file.getPath(), false);
+            BufferedWriter bufferedWriter = new BufferedWriter(writer);
+            String[] cont = jTextArea1.getText().split("\n");
+            for (int i = 0; i < cont.length; i++) {
+                bufferedWriter.write(cont[i]);
+                bufferedWriter.newLine();
+            }
+            bufferedWriter.close();
+            
+            File firstLocalFile = new File(file.getPath());
+            String firstRemoteFile = jLabel27.getText()+".txt";
+            
+            InputStream inputStream = new FileInputStream(firstLocalFile);
+ 
+            System.out.println("Start uploading first file");
+            boolean done = ftpClient.storeFile(firstRemoteFile, inputStream);
+            inputStream.close();
+            if (done) {
+                System.out.println("The first file is uploaded successfully.");
+            }
+            
+        } catch (IOException ex) {
+            System.out.println("Error: " + ex.getMessage());
+            ex.printStackTrace();
+        } finally {
+            try {
+                if (ftpClient.isConnected()) {
+                    ftpClient.logout();
+                    ftpClient.disconnect();
+                }
+            } catch (IOException ex) {
+                ex.printStackTrace();
+            }
+        }
+    }
 }
